@@ -4,7 +4,7 @@
 // Both fields are OPTIONAL — the user can skip the step entirely.
 
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { Theme } from '@/lib/types'
 import { THEME_CONFIG } from '@/lib/types'
 
@@ -29,6 +29,7 @@ const GENDERS: Array<{ value: Gender; label: string; symbol: string }> = [
 
 const MIN_AGE = 13
 const MAX_AGE = 120
+const ADVANCE_DELAY_MS = 900
 
 export default function StepProfile({
   theme,
@@ -42,9 +43,20 @@ export default function StepProfile({
   const accent = THEME_CONFIG[theme].accent
   const [ageText, setAgeText] = useState(age == null ? '' : String(age))
 
+  // Auto-advance debouncer — every "commit" gesture (gender click, age
+  // blur, age Enter) resets the timer, so quick edits don't trigger
+  // spurious advances.
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const scheduleAdvance = () => {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+    advanceTimerRef.current = setTimeout(() => {
+      onNext()
+    }, ADVANCE_DELAY_MS)
+  }
+
   const nothingFilled = gender == null && age == null
 
-  function commitAge(raw: string) {
+  function commitAge(raw: string, advanceAfter: boolean) {
     setAgeText(raw)
     if (raw.trim() === '') {
       onChangeAge(null)
@@ -53,10 +65,24 @@ export default function StepProfile({
     const n = parseInt(raw, 10)
     if (Number.isFinite(n) && n >= MIN_AGE && n <= MAX_AGE) {
       onChangeAge(n)
+      if (advanceAfter) scheduleAdvance()
     } else {
       onChangeAge(null)
     }
   }
+
+  function pickGender(g: Gender) {
+    const newVal = gender === g ? null : g
+    onChangeGender(newVal)
+    if (newVal) scheduleAdvance()
+  }
+
+  // Cleanup pending auto-advance timer on unmount
+  useEffect(() => {
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+    }
+  }, [])
 
   return (
     <motion.div
@@ -116,7 +142,7 @@ export default function StepProfile({
                 }}
                 whileHover={!selected ? { borderColor: `${accent}80` } : undefined}
                 whileTap={{ scale: 0.96 }}
-                onClick={() => onChangeGender(selected ? null : g.value)}
+                onClick={() => pickGender(g.value)}
                 transition={{ type: 'spring', stiffness: 350, damping: 28 }}
                 aria-pressed={selected}
               >
@@ -152,7 +178,13 @@ export default function StepProfile({
               min={MIN_AGE}
               max={MAX_AGE}
               value={ageText}
-              onChange={(e) => commitAge(e.target.value)}
+              onChange={(e) => commitAge(e.target.value, false)}
+              onBlur={(e) => commitAge(e.target.value, true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.currentTarget.blur()  // triggers onBlur → scheduleAdvance
+                }
+              }}
               placeholder="—"
               className="oracle-input text-center text-2xl !min-h-0 py-3 px-2 touch-manipulation"
               style={{
@@ -180,7 +212,10 @@ export default function StepProfile({
       >
         <button
           className="btn-ghost text-xs touch-manipulation"
-          onClick={onBack}
+          onClick={() => {
+            if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+            onBack()
+          }}
           id="profile-back-btn"
         >
           ← Back
@@ -188,7 +223,10 @@ export default function StepProfile({
         <motion.button
           whileTap={{ scale: 0.96 }}
           className="btn-oracle touch-manipulation"
-          onClick={onNext}
+          onClick={() => {
+            if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+            onNext()
+          }}
           id="profile-continue-btn"
         >
           Continue the Journey →
@@ -197,7 +235,10 @@ export default function StepProfile({
           <motion.button
             whileTap={{ scale: 0.96 }}
             className="btn-ghost text-xs touch-manipulation"
-            onClick={onNext}
+            onClick={() => {
+              if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+              onNext()
+            }}
             id="profile-skip-btn"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -153,17 +153,34 @@ export default function Page() {
   }, [])
 
   // ── Step transitions ─────────────────────────────────────────────
+  // Auto-advance timer — used for single-click choices (theme, spread, ...)
+  // Cancels itself if the user clicks another option before firing.
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   const handleBegin = async () => {
     await audio.unlockAndInit()
     audio.play('chime')
     setStep(2)
   }
 
-  const handleThemeSelect = (t: Theme) => setTheme(t)
-  const handleThemeNext = () => { audio.play('chime'); setStep(3) }
+  // ── Single-click choices auto-advance ──────────────────────────
+  const scheduleAdvance = (nextStep: Step, playAudio: () => void) => {
+    if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+    advanceTimerRef.current = setTimeout(() => {
+      playAudio()
+      setStep(nextStep)
+    }, 450)
+  }
 
-  const handleSpreadSelect = (id: SpreadId) => setSpreadId(id)
-  const handleSpreadNext = () => { audio.play('chime'); setStep(4) }
+  const handleThemeSelect = (t: Theme) => {
+    setTheme(t)
+    scheduleAdvance(3, () => audio.play('chime'))
+  }
+
+  const handleSpreadSelect = (id: SpreadId) => {
+    setSpreadId(id)
+    scheduleAdvance(4, () => audio.play('chime'))
+  }
 
   const handleQuestionNext = () => { audio.play('chime'); setStep(5) }
   const handleQuestionBack = () => { audio.play('chime'); setStep(3) }
@@ -233,7 +250,6 @@ export default function Page() {
             key="s2"
             selected={theme}
             onSelect={handleThemeSelect}
-            onNext={handleThemeNext}
           />
         )}
 
@@ -243,7 +259,6 @@ export default function Page() {
             theme={theme}
             selected={spreadId}
             onSelect={handleSpreadSelect}
-            onNext={handleSpreadNext}
           />
         )}
 

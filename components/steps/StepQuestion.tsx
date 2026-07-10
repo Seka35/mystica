@@ -94,7 +94,22 @@ export default function StepQuestion({ theme, question, onChange, onNext, onBack
           value={question}
           onChange={e => onChange(e.target.value.slice(0, MAX_CHARS))}
           onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
+          onBlur={() => {
+            setFocused(false)
+            // Auto-advance on blur if the question is long enough
+            if (question.trim().length >= 10) {
+              setTimeout(() => onNext(), 200)
+            }
+          }}
+          onKeyDown={e => {
+            // Enter (without Shift) advances; Shift+Enter inserts a newline
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault()
+              if (question.trim().length >= 10) {
+                onNext()
+              }
+            }
+          }}
           aria-label="Your question for the oracle"
         />
 

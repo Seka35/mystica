@@ -173,6 +173,15 @@ export default function StepShuffle({ onNext, onPlayShuffle }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slots])
 
+  // Auto-advance when the riffle completes — brief pause so the user
+  // sees "The deck is ready" before transitioning.
+  useEffect(() => {
+    if (!done) return
+    const t = setTimeout(() => onNext(), 1800)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done])
+
   return (
     <motion.div
       className="relative flex flex-col items-center justify-center min-h-dvh px-4 py-10 z-10"
@@ -343,9 +352,9 @@ export default function StepShuffle({ onNext, onPlayShuffle }: Props) {
         ) : null}
       </motion.div>
 
-      {/* Buttons — touch-manipulation kills the 300ms double-tap delay */}
+      {/* Only "Shuffle Again" left — auto-advance handles the rest */}
       <motion.div
-        className="flex flex-col sm:flex-row gap-3 items-center"
+        className="flex items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: done || isShuffling ? 1 : 0.4 }}
         transition={{ duration: 0.4 }}
@@ -358,16 +367,6 @@ export default function StepShuffle({ onNext, onPlayShuffle }: Props) {
           id="reshuffle-btn"
         >
           ↺ &nbsp; Shuffle Again
-        </motion.button>
-        <motion.button
-          whileTap={{ scale: 0.96 }}
-          className="btn-oracle touch-manipulation"
-          onClick={onNext}
-          disabled={!done}
-          style={{ opacity: done ? 1 : 0.3, cursor: done ? 'pointer' : 'not-allowed' }}
-          id="shuffle-continue-btn"
-        >
-          Sort Your Cards →
         </motion.button>
       </motion.div>
     </motion.div>

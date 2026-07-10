@@ -12,7 +12,6 @@ interface Props {
   theme: Theme
   selected: SpreadId
   onSelect: (id: SpreadId) => void
-  onNext: () => void
 }
 
 const SPREAD_ICONS: Record<SpreadId, string> = {
@@ -52,7 +51,7 @@ function LayoutHint({ spread }: { spread: Spread }) {
   )
 }
 
-export default function StepSpread({ theme, selected, onSelect, onNext }: Props) {
+export default function StepSpread({ theme, selected, onSelect }: Props) {
   const accent = THEME_CONFIG[theme].accent
   const muted   = THEME_CONFIG[theme].color
   const isReady = selected !== null
@@ -164,20 +163,10 @@ export default function StepSpread({ theme, selected, onSelect, onNext }: Props)
         })}
       </div>
 
-      {/* Continue */}
-      <motion.button
-        className="btn-oracle"
-        onClick={onNext}
-        disabled={!isReady}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isReady ? 1 : 0.3 }}
-        transition={{ duration: 0.4 }}
-        whileHover={isReady ? { y: -2 } : {}}
-        style={{ cursor: isReady ? 'pointer' : 'not-allowed' }}
-        id="spread-continue-btn"
-      >
-        Continue the Journey →
-      </motion.button>
+      {/* Helper text — no Continue button. Tap a spread to advance. */}
+      <p className="text-[var(--text-muted)] italic font-body text-sm opacity-60">
+        ✦ Tap a spread to continue
+      </p>
     </motion.div>
   )
 }

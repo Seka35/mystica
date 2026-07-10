@@ -8,7 +8,6 @@ import { THEME_CONFIG } from '@/lib/types'
 interface Props {
   selected: Theme | null
   onSelect: (theme: Theme) => void
-  onNext: () => void
 }
 
 const THEME_ICONS: Record<Theme, string> = {
@@ -21,7 +20,7 @@ const THEME_ICONS: Record<Theme, string> = {
 
 const THEME_ORDER: Theme[] = ['love', 'work', 'money', 'spiritual', 'free']
 
-export default function StepTheme({ selected, onSelect, onNext }: Props) {
+export default function StepTheme({ selected, onSelect }: Props) {
   return (
     <motion.div
       className="relative flex flex-col items-center justify-center min-h-dvh px-4 py-12 z-10"
@@ -110,20 +109,10 @@ export default function StepTheme({ selected, onSelect, onNext }: Props) {
         })}
       </div>
 
-      {/* Continue button */}
-      <motion.button
-        className="btn-oracle"
-        onClick={onNext}
-        disabled={!selected}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: selected ? 1 : 0.3 }}
-        transition={{ duration: 0.4 }}
-        whileHover={selected ? { y: -2 } : {}}
-        style={{ cursor: selected ? 'pointer' : 'not-allowed' }}
-        id="theme-continue-btn"
-      >
-        Continue the Journey →
-      </motion.button>
+      {/* Helper text — no Continue button. Click a theme to advance. */}
+      <p className="text-[var(--text-muted)] italic font-body text-sm opacity-60">
+        ✦ Tap a domain to continue
+      </p>
     </motion.div>
   )
 }
