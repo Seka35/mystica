@@ -172,7 +172,11 @@ if [ ! -f nginx-mystica.conf ]; then
   echo "❌  nginx-mystica.conf missing in ${APP_DIR}"
   exit 1
 fi
+# Enable our vhost: symlink into BOTH sites-available (storage) and
+# sites-enabled (actually loaded by nginx). Without the second symlink,
+# nginx never sees the config.
 ln -sf "${APP_DIR}/nginx-mystica.conf" /etc/nginx/sites-available/mystica
+ln -sf /etc/nginx/sites-available/mystica /etc/nginx/sites-enabled/mystica
 # Remove ONLY nginx's default welcome page, never other sites
 rm -f /etc/nginx/sites-enabled/default
 # Always include sites-enabled — safe even on minimal configs
