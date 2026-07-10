@@ -402,8 +402,7 @@ function SlotsArea({ cardCount, positions, picked, countdown, slotRefs, isMobile
         <Slot index={0} slotPos={positions[0]} card={picked[0]}
                color={PALETTE[0]} countdown={countdown}
                registerRef={(el) => { slotRefs.current[0] = el }}
-               size={isMobile ? 64 : 96} dim={isMobile ? 110 : 162}
-               isMobile={isMobile} />
+               size={isMobile ? 64 : 96} dim={isMobile ? 110 : 162} />
       </div>
     )
   }
@@ -415,8 +414,7 @@ function SlotsArea({ cardCount, positions, picked, countdown, slotRefs, isMobile
           <Slot key={i} index={i} slotPos={pos} card={picked[i]}
                 color={PALETTE[i]} countdown={countdown}
                 registerRef={(el) => { slotRefs.current[i] = el }}
-                size={isMobile ? 64 : 96} dim={isMobile ? 110 : 162}
-                isMobile={isMobile} />
+                size={isMobile ? 64 : 96} dim={isMobile ? 110 : 162} />
         ))}
       </div>
     )
@@ -438,7 +436,7 @@ function SlotsArea({ cardCount, positions, picked, countdown, slotRefs, isMobile
                   card={picked[idx]} color={PALETTE[idx]}
                   countdown={countdown}
                   registerRef={(el) => { slotRefs.current[idx] = el }}
-                  size={slotSize} dim={slotDim} isMobile />
+                  size={slotSize} dim={slotDim} />
           ))}
         </div>
       </div>
@@ -459,7 +457,7 @@ function SlotsArea({ cardCount, positions, picked, countdown, slotRefs, isMobile
           <Slot index={idx} slotPos={positions[idx]} card={picked[idx]}
                 color={PALETTE[idx]} countdown={countdown}
                 registerRef={(el) => { slotRefs.current[idx] = el }}
-                size={slotSize} dim={slotDim} isMobile={false} />
+                size={slotSize} dim={slotDim} />
         </div>
       ))}
     </div>
