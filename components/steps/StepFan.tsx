@@ -68,13 +68,14 @@ export default function StepFan({ spread, onDraw }: Props) {
   const slotRefs = useRef<Record<number, HTMLDivElement | null>>({})
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
-  // Tighter spread for 5-card, roomier for 1-card
-  const VISIBLE = spread.cardCount === 1 ? 22 : isMobile ? 22 : 32
-  const CARD_W  = isMobile ? 64 : 96
-  const CARD_H  = isMobile ? 110 : 162
+  // Mobile: fewer, larger cards so each one is easy to tap and read.
+  // Desktop: full spread for that "many cards" feel.
+  const VISIBLE = spread.cardCount === 1 ? 18 : isMobile ? 16 : 32
+  const CARD_W  = isMobile ? 84 : 96
+  const CARD_H  = isMobile ? 144 : 162
   const ARC     = spread.cardCount === 1 ? 100 : 130
-  const FAN_W   = isMobile ? 320 : 720
-  const FAN_H   = isMobile ? 220 : 290
+  const FAN_W   = isMobile ? 360 : 720
+  const FAN_H   = isMobile ? 240 : 290
 
   const cards: TarotCard[] = useMemo(() => {
     const seed = Math.floor(Date.now() % 1000000)
@@ -248,7 +249,7 @@ export default function StepFan({ spread, onDraw }: Props) {
               key={card.id}
               ref={(el) => { fanRefs.current[card.id] = el }}
               type="button"
-              className="absolute"
+              className="absolute touch-manipulation"
               style={{
                 left: `${baseX}%`,
                 bottom: 0,
@@ -263,6 +264,7 @@ export default function StepFan({ spread, onDraw }: Props) {
                 cursor: isComplete || flight ? 'default' : 'pointer',
               }}
               animate={{ y: lift, scale, opacity: flight && !isFlying ? 0.85 : 1 }}
+              whileTap={{ scale: 0.92, y: lift - 8 }}
               transition={{ type: 'spring', stiffness: 280, damping: 22, mass: 0.7 }}
               onMouseEnter={() => !isComplete && !flight && setHoveredId(card.id)}
               onMouseLeave={() => setHoveredId(null)}
@@ -451,7 +453,7 @@ function SlotsArea({ cardCount, positions, picked, countdown, slotRefs, isMobile
       {CROSS_5.map((cs, idx) => (
         <div
           key={idx}
-          className="absolute"
+          className="absolute touch-manipulation"
           style={{ top: cs.top, left: cs.left, transform: cs.transform }}
         >
           <Slot index={idx} slotPos={positions[idx]} card={picked[idx]}

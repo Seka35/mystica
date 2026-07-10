@@ -189,9 +189,11 @@ function CardFace({ drawn, index, color, question, onReveal, onFlipSound, compac
 }) {
   const { card, position, isRevealed } = drawn
   return (
-    <div
-      className="card-3d-wrapper cursor-pointer"
+    <motion.div
+      className="card-3d-wrapper cursor-pointer touch-manipulation"
       style={compact ? { transform: 'scale(0.65)', transformOrigin: 'center' } : undefined}
+      whileTap={isRevealed ? undefined : { scale: compact ? 0.6 : 0.94 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       onClick={() => {
         if (!isRevealed) { onFlipSound(); onReveal(index) }
       }}
@@ -272,6 +274,6 @@ function CardFace({ drawn, index, color, question, onReveal, onFlipSound, compac
           </motion.div>
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }
