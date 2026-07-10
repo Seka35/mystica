@@ -1,6 +1,6 @@
 'use client'
 // app/page.tsx — orchestrator: wires all steps together, drives audio + streaming API
-// Steps: 1=Welcome 2=Theme 3=Spread 4=Question 5=Shuffle 6=Fan 7=Draw 8=Interpretation
+// Steps: 1=Welcome 2=Theme 3=Spread 4=Question 5=Profile 6=Shuffle 7=Fan 8=Draw 9=Interpretation
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
@@ -9,19 +9,17 @@ import { useAudio } from '@/hooks/useAudio'
 import { processStreamedText } from '@/lib/textUtils'
 import { DEFAULT_SPREAD_ID, SPREADS_BY_ID, type Spread, type SpreadId } from '@/lib/spreads'
 import type { DrawnCard, Step, TarotCard, Theme } from '@/lib/types'
+import type { Gender } from '@/components/steps/StepProfile'
 
 import StepWelcome from '@/components/steps/StepWelcome'
 import StepTheme from '@/components/steps/StepTheme'
 import StepSpread from '@/components/steps/StepSpread'
 import StepQuestion from '@/components/steps/StepQuestion'
+import StepProfile from '@/components/steps/StepProfile'
 import StepShuffle from '@/components/steps/StepShuffle'
 import StepFan from '@/components/steps/StepFan'
 import StepDraw from '@/components/steps/StepDraw'
 import StepInterpretation from '@/components/steps/StepInterpretation'
-
-// Map DrawnCard.position (which is the spread's position name) to a stable
-// identifier that the API and components can use. We keep the original
-// `position` string in DrawnCard so the spread's name flows through.
 
 export default function Page() {
   // ── State machine ───────────────────────────────────────────────
@@ -29,20 +27,21 @@ export default function Page() {
   const [theme, setTheme] = useState<Theme | null>(null)
   const [spreadId, setSpreadId] = useState<SpreadId>(DEFAULT_SPREAD_ID)
   const [question, setQuestion] = useState('')
+  const [gender, setGender] = useState<Gender | null>(null)
+  const [age, setAge] = useState<number | null>(null)
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([])
   const [interpretation, setInterpretation] = useState('')
   const [isStreaming, setIsStreaming] = useState(false)
   const streamAbortRef = useRef<AbortController | null>(null)
 
-  // Derived: current spread object (always defined since spreadId has a default)
   const spread: Spread = SPREADS_BY_ID[spreadId]
 
   // ── Audio ────────────────────────────────────────────────────────
   const audio = useAudio()
 
-  // Lock scroll per-step; allow scroll only inside interpretation step
+  // Lock scroll per-step; allow scroll only inside interpretation step (9)
   useEffect(() => {
-    document.body.style.overflow = step === 8 ? 'auto' : 'hidden'
+    document.body.style.overflow = step === 9 ? 'auto' : 'hidden'
     return () => { document.body.style.overflow = '' }
   }, [step])
 
@@ -55,25 +54,29 @@ export default function Page() {
     setIsStreaming(false)
     setDrawnCards([])
     setQuestion('')
+    setGender(null)
+    setAge(null)
     setTheme(null)
     setSpreadId(DEFAULT_SPREAD_ID)
     setStep(1)
   }, [audio])
 
   // ── Start the AI streaming interpretation ────────────────────────
-  const startStreamingInterpretation = useCallback(async (
-    payload: {
-      question: string
-      theme: Theme
-      cards: DrawnCard[]
-      spreadId: SpreadId
-    }
-  ) => {
+  const startStreamingInterpretation = useCallback(async (payload: {
+    question: string
+    theme: Theme
+    cards: DrawnCard[]
+    spreadId: SpreadId
+    gender: Gender | null
+    age: number | null
+  }) => {
     if (!payload.theme) return
     const body = {
       question: payload.question,
       theme: payload.theme,
       spreadId: payload.spreadId,
+      gender: payload.gender,
+      age: payload.age,
       cards: payload.cards.map((d, i) => ({
         card: d.card,
         position: d.position,
@@ -108,7 +111,6 @@ export default function Page() {
         if (done) break
         buffer += decoder.decode(value, { stream: true })
 
-        // SSE frames are separated by blank lines
         const frames = buffer.split('\n\n')
         buffer = frames.pop() ?? ''
 
@@ -131,7 +133,6 @@ export default function Page() {
             const parsed = JSON.parse(data) as { text?: string }
             if (parsed.text) {
               acc += parsed.text
-              // Strip any markdown that the model may have leaked
               setInterpretation(processStreamedText(acc))
             }
           } catch {
@@ -153,62 +154,49 @@ export default function Page() {
 
   // ── Step transitions ─────────────────────────────────────────────
   const handleBegin = async () => {
-    await audio.unlockAndInit()     // unlock audio on first user gesture
+    await audio.unlockAndInit()
     audio.play('chime')
     setStep(2)
   }
 
   const handleThemeSelect = (t: Theme) => setTheme(t)
-
-  const handleThemeNext = () => {
-    audio.play('chime')
-    setStep(3)            // → Spread
-  }
+  const handleThemeNext = () => { audio.play('chime'); setStep(3) }
 
   const handleSpreadSelect = (id: SpreadId) => setSpreadId(id)
+  const handleSpreadNext = () => { audio.play('chime'); setStep(4) }
 
-  const handleSpreadNext = () => {
-    audio.play('chime')
-    setStep(4)            // → Question
-  }
+  const handleQuestionNext = () => { audio.play('chime'); setStep(5) }
+  const handleQuestionBack = () => { audio.play('chime'); setStep(3) }
 
-  const handleQuestionNext = () => {
-    audio.play('chime')
-    setStep(5)            // → Shuffle
-  }
-
-  const handleQuestionBack = () => {
-    audio.play('chime')
-    setStep(3)            // → Spread
-  }
+  const handleProfileNext = () => { audio.play('chime'); setStep(6) }
+  const handleProfileBack = () => { audio.play('chime'); setStep(4) }
 
   const handlePlayShuffle = () => audio.play('shuffle')
-
   const handleShuffleNext = () => {
     audio.stop('shuffle')
     audio.play('chime')
-    setStep(6)            // → Fan
+    setStep(7)
   }
 
-  // User drew N cards → build DrawnCard array using the spread's positions → advance to Step 7
+  // User drew N cards → advance to Draw step + start streaming
   const handleDraw = (cards: TarotCard[]) => {
     audio.play('chime')
-
     const drawn: DrawnCard[] = cards.map((card, i) => ({
       card,
       position: spread.positions[i]?.name ?? `position-${i}`,
       isRevealed: false,
     }))
     setDrawnCards(drawn)
-    setStep(7)            // → Draw (flip)
+    setStep(8)
 
-    // Kick off the AI stream as soon as cards exist (before user flips)
     if (theme) {
       void startStreamingInterpretation({
         question,
         theme,
         cards: drawn,
         spreadId,
+        gender,
+        age,
       })
     }
   }
@@ -219,25 +207,19 @@ export default function Page() {
       prev.map((c, idx) => (idx === i ? { ...c, isRevealed: true } : c))
     )
   }
-
   const handleFlipSound = () => audio.play('flip')
 
   const allRevealed = drawnCards.length > 0 && drawnCards.every((c) => c.isRevealed)
 
   const handleSeeInterpretation = () => {
     audio.play('chime')
-    setStep(8)            // → Interpretation
+    setStep(9)
   }
-
-  const handleNewReading = () => {
-    audio.play('chime')
-    resetReading()
-  }
+  const handleNewReading = () => { audio.play('chime'); resetReading() }
 
   // ── Render ───────────────────────────────────────────────────────
   return (
     <main className="relative min-h-dvh overflow-hidden">
-      {/* Star field + drifting golden particles — always behind steps */}
       <div className="star-field" aria-hidden="true" />
       <ParticleField />
 
@@ -276,21 +258,34 @@ export default function Page() {
           />
         )}
 
-        {step === 5 && (
-          <StepShuffle
+        {step === 5 && theme && (
+          <StepProfile
             key="s5"
+            theme={theme}
+            gender={gender}
+            age={age}
+            onChangeGender={setGender}
+            onChangeAge={setAge}
+            onNext={handleProfileNext}
+            onBack={handleProfileBack}
+          />
+        )}
+
+        {step === 6 && (
+          <StepShuffle
+            key="s6"
             onNext={handleShuffleNext}
             onPlayShuffle={handlePlayShuffle}
           />
         )}
 
-        {step === 6 && (
-          <StepFan key="s6" spread={spread} onDraw={handleDraw} />
+        {step === 7 && (
+          <StepFan key="s7" spread={spread} onDraw={handleDraw} />
         )}
 
-        {step === 7 && theme && (
+        {step === 8 && theme && (
           <StepDraw
-            key="s7"
+            key="s8"
             spread={spread}
             drawnCards={drawnCards}
             onReveal={handleReveal}
@@ -301,9 +296,9 @@ export default function Page() {
           />
         )}
 
-        {step === 8 && theme && (
+        {step === 9 && theme && (
           <StepInterpretation
-            key="s8"
+            key="s9"
             spread={spread}
             drawnCards={drawnCards}
             interpretation={interpretation}

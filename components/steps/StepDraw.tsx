@@ -46,7 +46,7 @@ export default function StepDraw({
         className="text-center mb-8"
       >
         <div className="text-[var(--text-muted)] font-oracle text-xs tracking-[0.4em] mb-4 opacity-60">
-          ✦ &nbsp; STEP SIX &nbsp; ✦
+          ✦ &nbsp; STEP SEVEN &nbsp; ✦
         </div>
         <h2 className="font-oracle text-3xl md:text-4xl gold-text mb-2">
           Your Reading

@@ -16,10 +16,48 @@ interface InterpretRequest {
   question: string
   theme: Theme
   spreadId: SpreadId | undefined
+  gender: 'woman' | 'man' | 'non-binary' | 'not-specified' | null | undefined
+  age: number | null | undefined
   cards: Array<{
     card: TarotCard
     position: string
   }>
+}
+
+// Human-readable strings for the reader profile, used in the user message so
+// the model can adapt pronouns, tone and life-stage references.
+function describeGender(g: InterpretRequest['gender']): string {
+  if (g === 'woman')        return 'a woman'
+  if (g === 'man')          return 'a man'
+  if (g === 'non-binary')   return 'a non-binary person'
+  if (g === 'not-specified') return 'a person'
+  return 'a person'
+}
+
+function describeAge(a: number | null | undefined): string {
+  if (a == null) return ''
+  if (a < 18)  return 'a teenager (' + a + ' years old)'
+  if (a < 26)  return 'a young adult (' + a + ' years old)'
+  if (a < 41)  return 'an adult (' + a + ' years old)'
+  if (a < 61)  return 'a mature adult (' + a + ' years old)'
+  return 'a senior (' + a + ' years old)'
+}
+
+// Adapted life-stage guidance appended to the user message.
+function ageGuidance(a: number): string {
+  if (a < 18)  return 'teen: school, identity, first loves, family pressure, future anxiety.'
+  if (a < 26)  return 'young adult: studies, first job, dating, independence, identity choices.'
+  if (a < 41)  return 'adult: career growth, partnership, family planning, big life decisions.'
+  if (a < 61)  return 'mature adult: long-term consequences, children, transitions, meaning.'
+  return 'senior: legacy, health, relationships, wisdom, life review.'
+}
+
+function pronounHint(g: InterpretRequest['gender']): string {
+  if (g === 'woman')        return 'Use she/her.'
+  if (g === 'man')          return 'Use he/him.'
+  if (g === 'non-binary')   return 'Use they/them.'
+  if (g === 'not-specified') return 'Use neutral "you" / your; avoid gendered constructions when natural.'
+  return 'Use neutral "you" / your; avoid gendered constructions when natural.'
 }
 
 const SYSTEM_PROMPT =
@@ -76,6 +114,11 @@ export async function POST(req: NextRequest) {
     const cards = body.cards
     const spreadId: SpreadId = body.spreadId || 'classic'
     const spread = SPREADS_BY_ID[spreadId] || SPREADS_BY_ID.classic
+    const gender: InterpretRequest['gender'] = body.gender || null
+    const age: number | null =
+      typeof body.age === 'number' && body.age >= 13 && body.age <= 120
+        ? body.age
+        : null
 
     if (!question || !theme || !cards || cards.length !== spread.cardCount) {
       const cardCount = cards ? cards.length : 0
@@ -121,7 +164,21 @@ export async function POST(req: NextRequest) {
 
     const themeCap = theme.charAt(0).toUpperCase() + theme.slice(1)
     const plural = spread.cardCount === 1 ? '' : 's'
+
+    // Optional profile context (gender + age) — only injected when provided
+    const hasProfile = gender != null || age != null
+    const profileBlock = hasProfile
+      ? 'Reader profile: ' +
+        describeGender(gender) +
+        (age != null ? ', ' + describeAge(age) : '') +
+        '.\n' +
+        pronounHint(gender) +
+        (age != null ? ' Tailor tone and life references to their stage: ' + ageGuidance(age) : '') +
+        '\n\n'
+      : ''
+
     const userMessage =
+      profileBlock +
       'Spread: ' +
       spread.name +
       ' (' +

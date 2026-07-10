@@ -195,7 +195,7 @@ export default function StepFan({ spread, onDraw }: Props) {
         className="text-center mb-3"
       >
         <div className="text-[var(--text-muted)] font-oracle text-xs tracking-[0.4em] mb-2 opacity-60">
-          ✦ &nbsp; STEP FIVE &nbsp; ✦
+          ✦ &nbsp; STEP SIX &nbsp; ✦
         </div>
         <h2 className="font-oracle text-2xl md:text-4xl gold-text mb-1">
           Draw Your Cards

@@ -2,7 +2,7 @@
 
 export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free'
 export type Position = string  // spread-defined (e.g. "Past", "The Obstacle")
-export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 export interface TarotCard {
   id: string
