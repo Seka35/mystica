@@ -175,14 +175,13 @@ export async function POST(req: NextRequest) {
         try {
           for await (const chunk of stream) {
             if (closed) break
-            const delta = chunk.delta
             if (
               chunk.type === 'content_block_delta' &&
-              delta &&
-              delta.type === 'text_delta' &&
-              delta.text
+              chunk.delta &&
+              chunk.delta.type === 'text_delta' &&
+              chunk.delta.text
             ) {
-              const data = JSON.stringify({ text: delta.text })
+              const data = JSON.stringify({ text: chunk.delta.text })
               safeEnqueue('data: ' + data + '\n\n')
             }
             if (chunk.type === 'message_stop') {
