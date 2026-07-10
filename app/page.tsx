@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import ParticleField from '@/components/ParticleField'
 import { useAudio } from '@/hooks/useAudio'
-import { stripMarkdown } from '@/lib/textUtils'
+import { processStreamedText } from '@/lib/textUtils'
 import { DEFAULT_SPREAD_ID, SPREADS_BY_ID, type Spread, type SpreadId } from '@/lib/spreads'
 import type { DrawnCard, Step, TarotCard, Theme } from '@/lib/types'
 
@@ -132,7 +132,7 @@ export default function Page() {
             if (parsed.text) {
               acc += parsed.text
               // Strip any markdown that the model may have leaked
-              setInterpretation(stripMarkdown(acc))
+              setInterpretation(processStreamedText(acc))
             }
           } catch {
             // Ignore malformed frame, keep going

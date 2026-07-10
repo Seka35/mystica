@@ -110,6 +110,20 @@ export default function StepQuestion({ theme, question, onChange, onNext, onBack
             {charCount}/{MAX_CHARS}
           </span>
         </div>
+
+        {/* Language hint — small banner so users know they can write in any language */}
+        <motion.div
+          className="w-full max-w-lg mt-5 flex items-center justify-center gap-2 text-xs font-body italic text-[var(--text-muted)] opacity-70"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.7 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          <span className="text-sm" aria-hidden>🌍</span>
+          <span>
+            Ask in <em>any language</em> — French, English, Spanish, Português...
+            The Oracle answers in yours.
+          </span>
+        </motion.div>
       </motion.div>
 
       {/* Listening indicator */}

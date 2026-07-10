@@ -232,7 +232,15 @@ body {
   -webkit-backface-visibility: hidden;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  /* Subtle 3D relief — looks like a real card resting on a table:
+   *  • drop shadow below the card
+   *  • faint top highlight (light grazes the top edge)
+   *  • faint right + bottom inset shadow (edges fall off into shadow) */
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    inset -1px 0 0 rgba(0, 0, 0, 0.12);
 }
 
 .card-back {
@@ -241,6 +249,24 @@ body {
 
 .card-face {
   transform: rotateY(180deg);
+}
+
+/* Subtle gloss overlay — applied to card faces for a soft light-from-upper-left
+ * sheen. Kept very faint so it stays natural and never looks CGI. */
+.card-gloss {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(0, 0, 0, 0) 70%,
+    rgba(0, 0, 0, 0.10) 100%
+  );
+  mix-blend-mode: screen;
+  border-radius: inherit;
 }
 
 .card-glow {

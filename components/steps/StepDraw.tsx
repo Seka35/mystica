@@ -240,6 +240,8 @@ function CardFace({ drawn, index, color, question, onReveal, onFlipSound, compac
             className="object-cover"
             sizes="(max-width: 640px) 120px, 200px"
           />
+          {/* Subtle gloss — soft "light from upper-left" sheen, only on the revealed face */}
+          {isRevealed && <div className="card-gloss" aria-hidden />}
           {isRevealed && (
             <motion.div className="absolute inset-0 rounded-lg"
               initial={{ opacity: 0.6 }} animate={{ opacity: 0 }}
