@@ -5,7 +5,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import type { DrawnCard } from '@/lib/types'
 import { cardImagePath, backImagePath } from '@/lib/tarotData'
 import { localizedCardName } from '@/lib/textUtils'
@@ -27,6 +27,17 @@ export default function StepDraw({
   spread, drawnCards, onReveal, onFlipSound, allRevealed, onNext, question,
 }: Props) {
   useEffect(() => {}, [])
+
+  // Auto-advance once every card has been flipped — give the user a beat
+  // to read the names before transitioning to the interpretation.
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  useEffect(() => {
+    if (!allRevealed) return
+    const t = setTimeout(() => onNext(), 1800)
+    advanceTimerRef.current = t
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allRevealed])
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
 
@@ -126,7 +137,10 @@ export default function StepDraw({
           </p>
           <button
             className="btn-oracle"
-            onClick={onNext}
+            onClick={() => {
+              if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
+              onNext()
+            }}
             id="see-interpretation-btn"
           >
             ✦ &nbsp; Read the Interpretation &nbsp; ✦
