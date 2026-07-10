@@ -1,30 +1,25 @@
 #!/usr/bin/env bash
 # ============================================================================
-#  Mystica.pro — one-shot deploy script
+#  Mystica.pro — deploy script (smart + idempotent)
 #  Tested on Kali Linux / Debian 12. Run as root:  sudo ./deploy.sh
 #
-#  What it does:
-#    1. Installs Node.js 20, nginx, certbot
-#    2. Opens firewall (80, 443)
-#    3. Configures SSH so git can clone the repo with the deploy key
-#    4. Clones / updates the repo at /var/www/mystica
-#    5. Builds the Next.js app
-#    6. Configures nginx as a reverse proxy → :3000
-#    7. Requests a Let's Encrypt SSL cert (auto-renews)
-#    8. Installs a systemd service so the app restarts on crash/reboot
+#  Behaviour:
+#    • If run inside an existing git checkout (`.git/` present), it just
+#      builds and updates the running app — NO git clone.
+#    • Otherwise it clones /var/www/mystica from the repo, then proceeds.
+#    • Never touches other nginx sites you may have running.
+#    • Safe to re-run after every `git pull` (idempotent).
 # ============================================================================
 set -euo pipefail
 
 DOMAIN="mystica.pro"
 WWW_DOMAIN="www.${DOMAIN}"
-APP_DIR="/var/www/mystica"
 REPO_URL="git@github.com:Seka35/mystica.git"
+DEFAULT_APP_DIR="/var/www/mystica"
 NODE_MAJOR="20"
 SSH_DIR="/root/.ssh"
 DEPLOY_KEY="${SSH_DIR}/mystica_deploy"
 CERTBOT_EMAIL="admin@${DOMAIN}"
-NGINX_CONF_SRC="${APP_DIR}/nginx-mystica.conf"
-NGINX_CONF_DST="/etc/nginx/sites-available/mystica"
 
 # ─── Pre-flight ────────────────────────────────────────────────────────────
 if [ "$(id -u)" -ne 0 ]; then
@@ -32,23 +27,35 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-if [ ! -f "${DEPLOY_KEY}" ]; then
-  echo "❌  Missing ${DEPLOY_KEY}"
-  echo "    From your local machine:"
-  echo "      scp ~/.ssh/mystica_deploy root@${DOMAIN}:/root/.ssh/"
-  echo "    Then chmod 600 on the server."
-  exit 1
+# Detect "already in a checkout" mode
+if [ -d .git ] && [ -f package.json ]; then
+  APP_DIR="$(pwd -P)"
+  echo "▶  Mystica.pro deploy (in-place mode)"
+  echo "   App dir: ${APP_DIR}  (git checkout)"
+else
+  if [ ! -f "${DEPLOY_KEY}" ]; then
+    echo "❌  Missing ${DEPLOY_KEY}"
+    echo "    One-time setup on the VPS:"
+    echo "      mkdir -p ${SSH_DIR} && chmod 700 ${SSH_DIR}"
+    echo "      scp ~/.ssh/mystica_deploy root@<host>:${SSH_DIR}/"
+    echo "      chmod 600 ${DEPLOY_KEY}"
+    echo
+    echo "    Then:"
+    echo "      git clone ${REPO_URL} ${DEFAULT_APP_DIR}"
+    echo "      cd ${DEFAULT_APP_DIR}"
+    echo "      chmod +x deploy.sh && ./deploy.sh"
+    exit 1
+  fi
+  chmod 600 "${DEPLOY_KEY}"
+  APP_DIR="${DEFAULT_APP_DIR}"
+  echo "▶  Mystica.pro deploy (fresh-VPS mode)"
 fi
-chmod 600 "${DEPLOY_KEY}"
 
-echo "▶  Mystica.pro deploy"
-echo "   Domain:     ${DOMAIN}"
-echo "   App dir:    ${APP_DIR}"
-echo "   Repo:       ${REPO_URL}"
+echo "   Domain:  ${DOMAIN}"
 echo
 
 # ─── 1. Node.js ${NODE_MAJOR} ────────────────────────────────────────────────
-echo "▶  Installing Node.js ${NODE_MAJOR}..."
+echo "▶  Checking Node.js ${NODE_MAJOR}..."
 if ! command -v node >/dev/null 2>&1 \
    || [ "$(node -v | cut -d. -f1 | tr -d 'v')" != "${NODE_MAJOR}" ]; then
   apt-get update -qq
@@ -59,15 +66,21 @@ fi
 echo "   node $(node -v) / npm $(npm -v)"
 
 # ─── 2. nginx + certbot ─────────────────────────────────────────────────────
-echo "▶  Installing nginx + certbot..."
-apt-get install -y -qq nginx certbot python3-certbot-nginx
-systemctl enable nginx >/dev/null
+echo "▶  Checking nginx + certbot..."
+if ! command -v nginx >/dev/null 2>&1; then
+  apt-get install -y -qq nginx
+  systemctl enable nginx >/dev/null
+fi
+if ! command -v certbot >/dev/null 2>&1; then
+  apt-get install -y -qq certbot python3-certbot-nginx
+fi
+# Don't restart nginx — would disturb other sites. Reload at the end.
 
-# ─── 3. Firewall ────────────────────────────────────────────────────────────
-echo "▶  Opening firewall ports..."
+# ─── 3. Firewall (open 80 + 443 if not already) ────────────────────────────
+echo "▶  Firewall..."
 if command -v ufw >/dev/null 2>&1 && ufw status 2>/dev/null | grep -q "Status: active"; then
-  ufw allow 80/tcp  >/dev/null
-  ufw allow 443/tcp >/dev/null
+  ufw allow 80/tcp  >/dev/null 2>&1 || true
+  ufw allow 443/tcp >/dev/null 2>&1 || true
 elif command -v iptables >/dev/null 2>&1; then
   iptables -C INPUT -p tcp --dport 80  -j ACCEPT 2>/dev/null \
     || iptables -I INPUT -p tcp --dport 80  -j ACCEPT
@@ -78,37 +91,36 @@ elif command -v iptables >/dev/null 2>&1; then
   fi
 fi
 
-# ─── 4. SSH for GitHub ──────────────────────────────────────────────────────
-echo "▶  Configuring SSH for GitHub..."
-chmod 700 "${SSH_DIR}"
-cat > "${SSH_DIR}/config" <<EOF
+# ─── 4. SSH for GitHub (only if we're going to clone) ──────────────────────
+if [ ! -d "${APP_DIR}/.git" ]; then
+  echo "▶  SSH for GitHub..."
+  chmod 700 "${SSH_DIR}" 2>/dev/null || true
+  cat > "${SSH_DIR}/config" <<EOF
 Host github.com
   HostName github.com
   User git
   IdentityFile ${DEPLOY_KEY}
   StrictHostKeyChecking accept
 EOF
-chmod 600 "${SSH_DIR}/config"
+  chmod 600 "${SSH_DIR}/config"
 
-# ─── 5. Clone / update repo ────────────────────────────────────────────────
-echo "▶  Cloning repository..."
-mkdir -p "$(dirname "${APP_DIR}")"
-if [ -d "${APP_DIR}/.git" ]; then
-  cd "${APP_DIR}"
-  git fetch --all --prune
-  git reset --hard origin/main
-else
+  # ─── 5. Clone the repo ───────────────────────────────────────────────────
+  echo "▶  Cloning ${REPO_URL} → ${APP_DIR}"
+  mkdir -p "$(dirname "${APP_DIR}")"
   rm -rf "${APP_DIR}"
   git clone --depth 1 "${REPO_URL}" "${APP_DIR}"
+  cd "${APP_DIR}"
+  chmod +x deploy.sh
+else
+  cd "${APP_DIR}"
+  echo "▶  Pulling latest..."
+  git pull --ff-only
 fi
-cd "${APP_DIR}"
-chmod +x deploy.sh
 
-# ─── 6. .env.local (interactive on first run only) ──────────────────────────
+# ─── 6. .env.local (only if missing) ────────────────────────────────────────
 if [ ! -f .env.local ] || grep -q "PLEASE_REPLACE" .env.local 2>/dev/null; then
   echo
-  echo "▶  First-run setup: .env.local"
-  echo "    Paste your MINIMAX_API_KEY (starts with 'sk-cp-...' or 'sk-...')."
+  echo "▶  First-run: paste your MINIMAX_API_KEY (starts with 'sk-cp-...' or 'sk-...')"
   echo
   read -r -p "    MINIMAX_API_KEY = " KEY
   if [ -z "${KEY}" ]; then
@@ -119,19 +131,19 @@ if [ ! -f .env.local ] || grep -q "PLEASE_REPLACE" .env.local 2>/dev/null; then
 MINIMAX_API_KEY=${KEY}
 ANTHROPIC_BASE_URL=https://api.minimax.io/anthropic
 EOF
-  echo "    Wrote $(pwd)/.env.local"
+  echo "    Wrote .env.local"
   echo
 fi
 
 # ─── 7. Install + build ─────────────────────────────────────────────────────
-echo "▶  Installing npm deps..."
+echo "▶  npm install..."
 npm ci --omit=dev 2>/dev/null || npm install --omit=dev
 
-echo "▶  Building production bundle..."
+echo "▶  Building Next.js..."
 NODE_ENV=production npm run build
 
-# ─── 8. systemd service ─────────────────────────────────────────────────────
-echo "▶  Creating systemd unit (mystica.service)..."
+# ─── 8. systemd unit (always overwrite — service definition changes) ───────
+echo "▶  systemd unit..."
 cat > /etc/systemd/system/mystica.service <<EOF
 [Unit]
 Description=Mystica.pro — Next.js Tarot App
@@ -150,37 +162,41 @@ Environment=PORT=3000
 [Install]
 WantedBy=multi-user.target
 EOF
-
 systemctl daemon-reload
 systemctl enable mystica >/dev/null
 systemctl restart mystica
 
-# ─── 9. nginx reverse proxy ────────────────────────────────────────────────
-echo "▶  Configuring nginx..."
-if [ ! -f "${NGINX_CONF_SRC}" ]; then
-  echo "❌  ${NGINX_CONF_SRC} not found. Was the repo fully cloned?"
+# ─── 9. nginx vhost (additive — never touches other sites) ─────────────────
+echo "▶  nginx vhost..."
+if [ ! -f nginx-mystica.conf ]; then
+  echo "❌  nginx-mystica.conf missing in ${APP_DIR}"
   exit 1
 fi
-
-# Enable our config, disable default site
-ln -sf "${NGINX_CONF_SRC}" "${NGINX_CONF_DST}"
+ln -sf "${APP_DIR}/nginx-mystica.conf" /etc/nginx/sites-available/mystica
+# Remove ONLY nginx's default welcome page, never other sites
 rm -f /etc/nginx/sites-enabled/default
-nginx -t
-systemctl reload nginx
+# Always include sites-enabled — safe even on minimal configs
+grep -q "include /etc/nginx/sites-enabled/\*;" /etc/nginx/nginx.conf \
+  || sed -i 's|# include /etc/nginx/sites-enabled/\*;|include /etc/nginx/sites-enabled/*;|' /etc/nginx/nginx.conf
+
+nginx -t && systemctl reload nginx
+echo "   nginx config OK, reloaded"
 
 # ─── 10. SSL via certbot ───────────────────────────────────────────────────
-echo "▶  Requesting Let's Encrypt SSL certificate..."
-echo "    (requires DNS A record for ${DOMAIN} → this server to be propagated)"
-if certbot --nginx \
-      -d "${DOMAIN}" -d "${WWW_DOMAIN}" \
-      --non-interactive --agree-tos -m "${CERTBOT_EMAIL}" \
-      --redirect; then
-  echo "✅  SSL certificate installed and HTTP→HTTPS redirect enabled"
+if certbot certificates 2>/dev/null | grep -q "${DOMAIN}"; then
+  echo "▶  SSL cert already exists for ${DOMAIN}"
 else
-  echo "⚠️   SSL request failed (DNS may not have propagated yet)."
-  echo "     The site is reachable on HTTP only for now."
-  echo "     Re-run later with:"
-  echo "       certbot --nginx -d ${DOMAIN} -d ${WWW_DOMAIN} --redirect"
+  echo "▶  Requesting Let's Encrypt cert for ${DOMAIN}..."
+  echo "    (DNS A record for ${DOMAIN} → this server must be propagated)"
+  if certbot --nginx \
+        -d "${DOMAIN}" -d "${WWW_DOMAIN}" \
+        --non-interactive --agree-tos -m "${CERTBOT_EMAIL}" \
+        --redirect 2>&1 | tee /tmp/certbot.log | tail -3; then
+    echo "✅  SSL installed"
+  else
+    echo "⚠️   SSL request failed (DNS may not be propagated yet)."
+    echo "     Retry later: certbot --nginx -d ${DOMAIN} -d ${WWW_DOMAIN} --redirect"
+  fi
 fi
 
 # ─── 11. Done ──────────────────────────────────────────────────────────────
@@ -190,13 +206,9 @@ echo "▶  Status:"
 echo "   mystica:    $(systemctl is-active mystica  2>/dev/null || echo '?')"
 echo "   nginx:      $(systemctl is-active nginx    2>/dev/null || echo '?')"
 echo
-echo "✅  Deploy complete."
+echo "✅  Deploy complete — https://${DOMAIN}"
 echo
-echo "   🌐  https://${DOMAIN}"
-echo
-echo "   Useful:"
-echo "     journalctl -u mystica -f           # live app logs"
-echo "     journalctl -u nginx -f             # live nginx logs"
-echo "     systemctl restart mystica          # restart app"
-echo "     sudo ./deploy.sh                   # redeploy (git pull + rebuild)"
+echo "    journalctl -u mystica -f    # app logs"
+echo "    journalctl -u nginx -f      # nginx logs"
+echo "    systemctl restart mystica   # quick restart"
 echo
