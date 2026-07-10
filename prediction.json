@@ -1,0 +1,1630 @@
+{
+    "majorArcana": [
+        {
+            "id": "01_le_bateleur",
+            "image": "01_le_bateleur.png",
+            "name": "The Magician",
+            "nameFr": "Le Bateleur",
+            "number": 1,
+            "arcana": "major",
+            "keywords": [
+                "willpower",
+                "skill",
+                "new beginnings",
+                "manifestation"
+            ],
+            "general": "A new cycle begins. You hold all the tools you need to shape your destiny. This card speaks of raw potential, initiative, and the power to turn ideas into reality.",
+            "love": "A new relationship may be starting, or a fresh dynamic entering an existing one. Take initiative — the power to transform your love life is in your hands.",
+            "work": "The perfect moment to launch a project or venture. Your skills are sharp and opportunities are aligning. Act with confidence.",
+            "money": "New financial opportunities are emerging. Your resourcefulness will open doors — but stay grounded and avoid overpromising.",
+            "spiritual": "You are awakening to your own power. Channel your energy consciously; you are the creator of your path.",
+            "reversed": "Scattered energy, manipulation, or untapped potential. Beware of illusions — yours or someone else's."
+        },
+        {
+            "id": "02_la_papesse",
+            "image": "02_la_papesse.png",
+            "name": "The High Priestess",
+            "nameFr": "La Papesse",
+            "number": 2,
+            "arcana": "major",
+            "keywords": [
+                "intuition",
+                "mystery",
+                "inner wisdom",
+                "patience"
+            ],
+            "general": "Silence holds the answer. This card calls you to look inward, trust your intuition, and let hidden knowledge surface. Not everything must be acted upon — some things must simply be understood.",
+            "love": "Secrets or unspoken feelings surround your love life. Listen to your instincts; they perceive what words conceal.",
+            "work": "Observe before acting. Important information has not yet been revealed. Discretion and patience will serve you better than bold moves.",
+            "money": "Not the time for risky investments. Study, research, and wait for clarity before committing your resources.",
+            "spiritual": "A deep phase of inner knowing. Meditation, dreams, and quiet reflection will reveal truths your conscious mind cannot grasp.",
+            "reversed": "Ignored intuition, repressed feelings, or secrets causing harm. Reconnect with your inner voice."
+        },
+        {
+            "id": "03_l_imperatrice",
+            "image": "03_l_imperatrice.png",
+            "name": "The Empress",
+            "nameFr": "L'Impératrice",
+            "number": 3,
+            "arcana": "major",
+            "keywords": [
+                "abundance",
+                "creativity",
+                "fertility",
+                "nurturing"
+            ],
+            "general": "Growth and abundance flow into your life. The Empress represents creation in all its forms — projects, relationships, ideas blossoming. Nurture what you love and watch it flourish.",
+            "love": "A flourishing, generous phase in love. Deep affection, sensuality, and possibly commitment or family expansion.",
+            "work": "Creative projects thrive. Your ideas are fertile ground — cultivate them. Collaboration and harmony boost productivity.",
+            "money": "A period of material comfort and growth. Abundance is available, but manage it with grace rather than greed.",
+            "spiritual": "Connect with nature and the creative force of life. Your spirit grows through beauty, art, and compassion.",
+            "reversed": "Creative block, dependence, or smothering energy. Rebalance giving and receiving."
+        },
+        {
+            "id": "04_l_empereur",
+            "image": "04_l_empereur.png",
+            "name": "The Emperor",
+            "nameFr": "L'Empereur",
+            "number": 4,
+            "arcana": "major",
+            "keywords": [
+                "structure",
+                "authority",
+                "stability",
+                "leadership"
+            ],
+            "general": "Order, structure, and solid foundations. The Emperor calls you to take command of your life with discipline and strategy. Build something that lasts.",
+            "love": "Stability and commitment define this period. A protective, reliable partner — or the need to bring structure to your relationship.",
+            "work": "Leadership is required. Take responsibility, set boundaries, and organize. Recognition from authority figures is possible.",
+            "money": "Solid financial management pays off. Build long-term security through discipline rather than speculation.",
+            "spiritual": "Ground your spiritual practice in routine and discipline. Strength comes from mastery of self.",
+            "reversed": "Rigidity, control issues, or abuse of power. Loosen your grip without losing your foundation."
+        },
+        {
+            "id": "05_le_pape",
+            "image": "05_le_pape.png",
+            "name": "The Hierophant",
+            "nameFr": "Le Pape",
+            "number": 5,
+            "arcana": "major",
+            "keywords": [
+                "tradition",
+                "guidance",
+                "wisdom",
+                "teaching"
+            ],
+            "general": "Seek counsel and honor proven wisdom. The Hierophant represents mentors, traditions, and moral guidance. Sometimes the conventional path is the right one.",
+            "love": "A relationship blessed by commitment and shared values. Marriage or formalization may be near. Seek advice if in doubt.",
+            "work": "Learn from mentors or established methods. Institutions, certifications, or formal training favor your progress.",
+            "money": "Follow conventional financial wisdom. Trusted advisors bring valuable insight — don't reinvent the wheel.",
+            "spiritual": "A teacher or tradition may guide your awakening. Explore established spiritual paths before forging your own.",
+            "reversed": "Dogma, conformity pressure, or rejecting good advice. Question tradition, but don't dismiss all wisdom."
+        },
+        {
+            "id": "06_les_amoureux",
+            "image": "06_les_amoureux.png",
+            "name": "The Lovers",
+            "nameFr": "Les Amoureux",
+            "number": 6,
+            "arcana": "major",
+            "keywords": [
+                "choice",
+                "love",
+                "union",
+                "alignment"
+            ],
+            "general": "A meaningful choice stands before you. The Lovers speak of union, attraction, and decisions of the heart — choose what aligns with your deepest values, not just your desires.",
+            "love": "A powerful connection or a decisive crossroads in love. Follow your heart, but make sure your choice honors who you truly are.",
+            "work": "A career choice requires alignment between passion and pragmatism. Partnerships and collaborations are highlighted.",
+            "money": "Financial decisions tied to values. Choose investments or paths you genuinely believe in.",
+            "spiritual": "Harmony between opposing forces within you. Integration of heart and mind leads to wholeness.",
+            "reversed": "Disharmony, misalignment, or avoiding a necessary choice. Indecision is itself a decision."
+        },
+        {
+            "id": "07_le_chariot",
+            "image": "07_le_chariot.png",
+            "name": "The Chariot",
+            "nameFr": "Le Chariot",
+            "number": 7,
+            "arcana": "major",
+            "keywords": [
+                "victory",
+                "willpower",
+                "momentum",
+                "self-control"
+            ],
+            "general": "Victory through determination. The Chariot charges forward — success is within reach if you harness opposing forces and stay focused on your destination.",
+            "love": "Taking control of your romantic destiny. A relationship moving forward decisively, or the confidence to pursue who you want.",
+            "work": "Rapid progress and triumph over obstacles. Stay disciplined; your ambition is carrying you toward recognition.",
+            "money": "Financial momentum builds. Bold but controlled moves succeed. Keep your hands firmly on the reins.",
+            "spiritual": "Mastery of inner conflicts. Direct your willpower toward growth rather than letting emotions pull you in all directions.",
+            "reversed": "Loss of direction, aggression, or forcing outcomes. Slow down and realign before accelerating again."
+        },
+        {
+            "id": "08_la_justice",
+            "image": "08_la_justice.png",
+            "name": "Justice",
+            "nameFr": "La Justice",
+            "number": 8,
+            "arcana": "major",
+            "keywords": [
+                "fairness",
+                "truth",
+                "balance",
+                "accountability"
+            ],
+            "general": "Truth and consequence. Justice weighs your actions — what you have sown, you now reap. Decisions made now must be fair, clear-eyed, and honest.",
+            "love": "Balance and honesty are essential. A relationship reaches a point of truth; fairness in giving and receiving must be restored.",
+            "work": "Contracts, legal matters, or fair evaluations. Your integrity is noticed. Document everything and act ethically.",
+            "money": "Balance your accounts — literally. Legal or contractual financial matters resolve according to merit.",
+            "spiritual": "Karmic clarity. Take responsibility for your path; equilibrium comes from honest self-assessment.",
+            "reversed": "Injustice, dishonesty, or avoiding accountability. Face the truth before it faces you."
+        },
+        {
+            "id": "09_l_ermite",
+            "image": "09_l_ermite.png",
+            "name": "The Hermit",
+            "nameFr": "L'Ermite",
+            "number": 9,
+            "arcana": "major",
+            "keywords": [
+                "introspection",
+                "solitude",
+                "wisdom",
+                "seeking"
+            ],
+            "general": "Withdraw to find your light. The Hermit calls for solitude, reflection, and inner search. The answers you seek are not outside — they wait in the quiet.",
+            "love": "A period of solitude or introspection about what you truly need. Distance can clarify feelings rather than end them.",
+            "work": "Step back to gain perspective. Deep work, research, or independent projects favor you more than group efforts now.",
+            "money": "Prudence and patience. Review your finances quietly and thoroughly before making moves.",
+            "spiritual": "A profound spiritual quest. Solitude, study, and contemplation illuminate your inner path.",
+            "reversed": "Isolation, loneliness, or refusing help. Reflection is healthy; hiding from life is not."
+        },
+        {
+            "id": "10_la_roue_de_fortune",
+            "image": "10_la_roue_de_fortune.png",
+            "name": "The Wheel of Fortune",
+            "nameFr": "La Roue de Fortune",
+            "number": 10,
+            "arcana": "major",
+            "keywords": [
+                "change",
+                "cycles",
+                "destiny",
+                "turning point"
+            ],
+            "general": "The wheel turns. A major shift is underway — circumstances change, luck rotates, and a new chapter begins. Adapt rather than resist; the movement itself is the message.",
+            "love": "A turning point in your love life. Fate brings encounters or changes — stay open to the unexpected.",
+            "work": "Sudden opportunities or changes of direction. What seemed stuck now moves. Seize the moment when the wheel favors you.",
+            "money": "Financial fluctuation. Fortune may rise quickly — prepare for cycles rather than expecting permanence.",
+            "spiritual": "Understanding life's cycles. Nothing is fixed; wisdom lies in flowing with change rather than clinging.",
+            "reversed": "Resistance to change or a streak of setbacks. The wheel always turns again — patience."
+        },
+        {
+            "id": "11_la_force",
+            "image": "11_la_force.png",
+            "name": "Strength",
+            "nameFr": "La Force",
+            "number": 11,
+            "arcana": "major",
+            "keywords": [
+                "courage",
+                "patience",
+                "inner strength",
+                "compassion"
+            ],
+            "general": "True strength is gentle. This card speaks of mastering instincts through patience and compassion rather than force. Your quiet courage overcomes what brute power cannot.",
+            "love": "Passion tamed by tenderness. A relationship deepens through patience and emotional courage.",
+            "work": "Persistent, calm effort wins over aggression. Handle difficult people or situations with diplomatic firmness.",
+            "money": "Discipline your impulses. Steady control over spending and long-term persistence build wealth.",
+            "spiritual": "Integrating your shadow. Inner peace comes from accepting and gently directing your primal energies.",
+            "reversed": "Self-doubt, raw emotion overwhelming reason, or misused force. Reconnect with your calm center."
+        },
+        {
+            "id": "12_le_pendu",
+            "image": "12_le_pendu.png",
+            "name": "The Hanged Man",
+            "nameFr": "Le Pendu",
+            "number": 12,
+            "arcana": "major",
+            "keywords": [
+                "surrender",
+                "new perspective",
+                "pause",
+                "letting go"
+            ],
+            "general": "Suspension, not stagnation. The Hanged Man invites you to release control and see the world from a new angle. What seems like a delay is actually a revelation in progress.",
+            "love": "A pause or sacrifice in love. Letting go of expectations may transform the relationship — or reveal its truth.",
+            "work": "Projects on hold. Use this suspended time to rethink your approach; forcing progress now would be wasted effort.",
+            "money": "Financial standstill. Avoid major decisions; reassess your priorities while things are paused.",
+            "spiritual": "Profound surrender. Enlightenment comes when you stop struggling and accept a higher perspective.",
+            "reversed": "Useless sacrifice, stalling, or martyrdom. Release what no longer serves — including the pause itself."
+        },
+        {
+            "id": "13_la_mort",
+            "image": "13_la_mort.png",
+            "name": "Death",
+            "nameFr": "La Mort",
+            "number": 13,
+            "arcana": "major",
+            "keywords": [
+                "transformation",
+                "endings",
+                "rebirth",
+                "renewal"
+            ],
+            "general": "An ending that liberates. Death rarely speaks of the literal — it announces profound transformation: a chapter closes so a truer one can begin. Release what is over.",
+            "love": "The end of a dynamic, relationship, or old pattern. Painful perhaps, but necessary for authentic love to emerge.",
+            "work": "A role, project, or career phase concludes. This clearing makes room for a path more aligned with who you've become.",
+            "money": "Old financial structures dissolve. Restructure debts or habits — renewal follows the purge.",
+            "spiritual": "Ego death and rebirth. The deepest transformation of self is underway; trust the process.",
+            "reversed": "Resisting a necessary ending. Clinging prolongs the pain; the transformation will happen regardless."
+        },
+        {
+            "id": "14_la_temperance",
+            "image": "14_la_temperance.png",
+            "name": "Temperance",
+            "nameFr": "La Tempérance",
+            "number": 14,
+            "arcana": "major",
+            "keywords": [
+                "balance",
+                "moderation",
+                "healing",
+                "harmony"
+            ],
+            "general": "The art of the middle path. Temperance blends opposites into harmony — patience, moderation, and healing flow through your life. Time is your ally.",
+            "love": "Harmony returns or deepens. A balanced, healing relationship — or reconciliation after turbulence.",
+            "work": "Cooperation and measured progress. Blend different approaches; the balanced solution outperforms the extreme one.",
+            "money": "Moderation in spending and saving. Steady, patient management brings quiet prosperity.",
+            "spiritual": "Inner alchemy. You are integrating lessons and finding serenity through balance of body, mind, and soul.",
+            "reversed": "Excess, imbalance, or impatience. Return to the center before the pendulum swings too far."
+        },
+        {
+            "id": "15_le_diable",
+            "image": "15_le_diable.png",
+            "name": "The Devil",
+            "nameFr": "Le Diable",
+            "number": 15,
+            "arcana": "major",
+            "keywords": [
+                "attachment",
+                "temptation",
+                "materialism",
+                "shadow"
+            ],
+            "general": "Look at your chains — you hold the key. The Devil reveals attachments, addictions, and patterns that bind you. Naming the shadow is the first step to freedom.",
+            "love": "Intense passion or toxic attachment. Desire is powerful here — ensure it liberates rather than enslaves.",
+            "work": "Golden handcuffs or manipulative dynamics. Ambition is healthy; obsession and compromised ethics are not.",
+            "money": "Materialism or debt cycles binding you. Examine your relationship with money honestly.",
+            "spiritual": "Facing the shadow self. Integration of your darker impulses — not denial — is the path to wholeness.",
+            "reversed": "Breaking free from chains. Liberation from addiction, toxic ties, or limiting beliefs is underway."
+        },
+        {
+            "id": "16_la_maison_dieu",
+            "image": "16_la_maison_dieu.png",
+            "name": "The Tower",
+            "nameFr": "La Maison Dieu",
+            "number": 16,
+            "arcana": "major",
+            "keywords": [
+                "upheaval",
+                "revelation",
+                "sudden change",
+                "awakening"
+            ],
+            "general": "The lightning strike of truth. The Tower collapses what was built on false foundations. Sudden, disruptive — but what falls needed to fall. The rebuilding will be truer.",
+            "love": "A sudden revelation or rupture shakes your love life. The truth exposed now, though jarring, frees you from illusion.",
+            "work": "Unexpected disruption — restructuring, sudden change, or a shocking realization. Adapt fast; opportunity hides in the rubble.",
+            "money": "Financial shock or sudden expense. Rebuild on more solid ground with the lessons learned.",
+            "spiritual": "A flash of awakening that shatters old beliefs. Disorienting but profoundly liberating.",
+            "reversed": "Avoiding necessary collapse or fearing disaster. Controlled demolition beats waiting for the earthquake."
+        },
+        {
+            "id": "17_l_etoile",
+            "image": "17_l_etoile.png",
+            "name": "The Star",
+            "nameFr": "L'Étoile",
+            "number": 17,
+            "arcana": "major",
+            "keywords": [
+                "hope",
+                "inspiration",
+                "renewal",
+                "serenity"
+            ],
+            "general": "After the storm, the star. Hope, healing, and inspiration return to your life. The universe is gently realigning in your favor — trust and remain open.",
+            "love": "Renewed hope in love. Healing after difficulty, or a serene, inspiring connection blossoming.",
+            "work": "Inspiration flows and your vision clarifies. A promising future takes shape — follow your guiding star.",
+            "money": "Gradual financial recovery. Optimism is justified, though patience is still needed.",
+            "spiritual": "Grace and connection to the universe. A profoundly peaceful phase of faith and renewal.",
+            "reversed": "Lost hope or disconnection. The star still shines — you've only stopped looking up."
+        },
+        {
+            "id": "18_la_lune",
+            "image": "18_la_lune.png",
+            "name": "The Moon",
+            "nameFr": "La Lune",
+            "number": 18,
+            "arcana": "major",
+            "keywords": [
+                "illusion",
+                "intuition",
+                "dreams",
+                "uncertainty"
+            ],
+            "general": "Nothing is quite as it seems. The Moon casts shadows and illusions — fears distort reality, but intuition sees through the fog. Move slowly and trust your deeper senses.",
+            "love": "Confusion, ambiguity, or hidden feelings. Don't make final judgments in the dark — clarity will come with dawn.",
+            "work": "Unclear situations or hidden agendas. Verify facts, trust your gut, and avoid signing anything blindly.",
+            "money": "Financial fog — hidden costs or unclear deals. Postpone commitments until the picture sharpens.",
+            "spiritual": "The realm of dreams and the unconscious speaks. Powerful intuitive phase — but discern vision from illusion.",
+            "reversed": "Fog lifting, fears released, or self-deception ending. Truth emerges from the night."
+        },
+        {
+            "id": "19_le_soleil",
+            "image": "19_le_soleil.png",
+            "name": "The Sun",
+            "nameFr": "Le Soleil",
+            "number": 19,
+            "arcana": "major",
+            "keywords": [
+                "joy",
+                "success",
+                "vitality",
+                "clarity"
+            ],
+            "general": "Radiant success. The Sun illuminates everything — joy, vitality, achievement, and truth. One of the most positive cards: what you undertake now flourishes in full light.",
+            "love": "Radiant happiness in love. A joyful, honest, warm relationship — or a luminous new encounter.",
+            "work": "Success and recognition. Your talents shine visibly; celebrate achievements and aim high.",
+            "money": "Prosperity and abundance. Financial clarity and growth — enjoy it while staying grateful.",
+            "spiritual": "Enlightened consciousness and pure joy. You are aligned with your truth and it shows.",
+            "reversed": "Temporary clouds — delayed success or dimmed enthusiasm. The sun remains behind them."
+        },
+        {
+            "id": "20_le_jugement",
+            "image": "20_le_jugement.png",
+            "name": "Judgement",
+            "nameFr": "Le Jugement",
+            "number": 20,
+            "arcana": "major",
+            "keywords": [
+                "awakening",
+                "renewal",
+                "calling",
+                "reckoning"
+            ],
+            "general": "The call to rise. Judgement announces an awakening — a summons to a higher version of your life. The past is evaluated, forgiven, and transcended. Answer the call.",
+            "love": "Revival of a relationship or a decisive clarification. Past connections may resurface for resolution.",
+            "work": "A vocation calls. Recognition of past efforts arrives — and with it, a chance to redefine your path entirely.",
+            "money": "Financial rebirth. Old matters resolve, debts clear, and a healthier chapter begins.",
+            "spiritual": "Profound spiritual awakening. You hear the call of your higher purpose — this is a threshold moment.",
+            "reversed": "Ignoring the call or harsh self-judgment. Forgive your past; the invitation to rise remains open."
+        },
+        {
+            "id": "21_le_monde",
+            "image": "21_le_monde.png",
+            "name": "The World",
+            "nameFr": "Le Monde",
+            "number": 21,
+            "arcana": "major",
+            "keywords": [
+                "completion",
+                "fulfillment",
+                "wholeness",
+                "achievement"
+            ],
+            "general": "The cycle completes in glory. The World is fulfillment — a chapter ends in success and wholeness. Celebrate, integrate, and prepare for the next dance, which begins from a higher place.",
+            "love": "A relationship reaches beautiful maturity, or a soul-deep union. Harmony and completeness in love.",
+            "work": "A major goal is achieved. International opportunities or full recognition — you've arrived somewhere important.",
+            "money": "Financial goals attained. Stability and abundance mark the completion of a long effort.",
+            "spiritual": "Unity and cosmic connection. A sense of being exactly where you're meant to be.",
+            "reversed": "Incomplete closure or delayed success. One last step remains — finish the circle."
+        },
+        {
+            "id": "22_le_mat",
+            "image": "22_le_mat.png",
+            "name": "The Fool",
+            "nameFr": "Le Mat",
+            "number": 0,
+            "arcana": "major",
+            "keywords": [
+                "new beginnings",
+                "freedom",
+                "spontaneity",
+                "leap of faith"
+            ],
+            "general": "The sacred leap. The Fool walks toward the unknown, free and unburdened. A new journey calls — bring only your trust. Beautiful folly may be the wisest move.",
+            "love": "A spontaneous new romance or a fresh, carefree energy. Love without a map — embrace the adventure.",
+            "work": "An unconventional opportunity or bold career leap. Inexperience is offset by fresh vision — dare.",
+            "money": "Financial risk-taking. A leap can pay off, but pack a parachute: keep basic reserves.",
+            "spiritual": "Radical openness and beginner's mind. The path reveals itself only to those who start walking.",
+            "reversed": "Recklessness or paralyzing fear of the leap. Balance spontaneity with a moment of reflection."
+        }
+    ],
+    "minorArcana": {
+        "wands": [
+            {
+                "id": "bat_as",
+                "image": "bat_as.png",
+                "name": "Ace of Wands",
+                "nameFr": "As de Bâton",
+                "number": 1,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "inspiration",
+                    "new energy",
+                    "creation",
+                    "spark"
+                ],
+                "general": "A spark of pure creative fire. New passion, project, or burst of energy ignites. Act on it before the flame cools.",
+                "love": "A passionate new attraction or renewed desire. Raw chemistry and exciting beginnings.",
+                "work": "A brilliant idea or project launch. Creative energy at its peak — start now.",
+                "money": "A new income opportunity sparks. Entrepreneurial energy favors bold starts.",
+                "spiritual": "Creative life-force awakening. Your inner fire is lit — direct it with intention."
+            },
+            {
+                "id": "bat_2",
+                "image": "bat_2.png",
+                "name": "Two of Wands",
+                "nameFr": "Deux de Bâton",
+                "number": 2,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "planning",
+                    "vision",
+                    "decision",
+                    "potential"
+                ],
+                "general": "The world in your hands, plans on the table. You stand between what you've built and what you envision. Choose your direction boldly.",
+                "love": "Weighing options or planning a future together. A relationship at a decision point.",
+                "work": "Strategic planning phase. Your vision is solid — now map the route to expansion.",
+                "money": "Long-term financial vision. Plan investments and consider broader horizons.",
+                "spiritual": "Contemplating your path from a higher view. Vision precedes the journey."
+            },
+            {
+                "id": "bat_3",
+                "image": "bat_3.png",
+                "name": "Three of Wands",
+                "nameFr": "Trois de Bâton",
+                "number": 3,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "expansion",
+                    "foresight",
+                    "progress",
+                    "opportunity"
+                ],
+                "general": "Your ships are coming in. Efforts begin bearing fruit and horizons expand. Keep looking forward — momentum is building.",
+                "love": "A relationship expanding — perhaps across distance. Growth requires patience and trust.",
+                "work": "Projects gain traction. Partnerships and expansion opportunities materialize.",
+                "money": "Returns on investment begin arriving. Growth confirmed — reinvest wisely.",
+                "spiritual": "Your inner work manifests outwardly. Trust the unfolding."
+            },
+            {
+                "id": "bat_4",
+                "image": "bat_4.png",
+                "name": "Four of Wands",
+                "nameFr": "Quatre de Bâton",
+                "number": 4,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "celebration",
+                    "harmony",
+                    "milestone",
+                    "home"
+                ],
+                "general": "A milestone worth celebrating. Stability, joy, and community — a foundation is laid and it's solid. Honor the moment.",
+                "love": "Celebration in love — engagement, moving in, or simply joyful harmony. A happy threshold.",
+                "work": "A project milestone achieved. Team harmony and well-earned recognition.",
+                "money": "Financial stability reached. A solid base from which to grow.",
+                "spiritual": "Gratitude and belonging. Your soul finds its home."
+            },
+            {
+                "id": "bat_5",
+                "image": "bat_5.png",
+                "name": "Five of Wands",
+                "nameFr": "Cinq de Bâton",
+                "number": 5,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "conflict",
+                    "competition",
+                    "friction",
+                    "rivalry"
+                ],
+                "general": "Sparks fly from friction. Competition, disagreement, or scattered energies clash. The tension can sharpen you — if you don't let it exhaust you.",
+                "love": "Quarrels or rivalry. Passion expressed as friction — channel it into honest dialogue.",
+                "work": "Competition or team conflict. Assert your ideas without turning colleagues into enemies.",
+                "money": "Competing priorities strain resources. Avoid impulsive competitive spending.",
+                "spiritual": "Inner conflict between desires. Growth comes from integrating, not suppressing, the struggle."
+            },
+            {
+                "id": "bat_6",
+                "image": "bat_6.png",
+                "name": "Six of Wands",
+                "nameFr": "Six de Bâton",
+                "number": 6,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "victory",
+                    "recognition",
+                    "success",
+                    "confidence"
+                ],
+                "general": "Victory parade. Success is public and recognition deserved. Accept the laurels graciously — and stay humble enough to keep growing.",
+                "love": "A relationship you're proud of, or triumph after romantic difficulty. Confidence attracts.",
+                "work": "Public recognition, promotion, or a winning achievement. Your efforts are seen.",
+                "money": "Financial success acknowledged. Rewards arrive — share the fortune.",
+                "spiritual": "Confidence in your path. Progress deserves acknowledgment, even spiritually."
+            },
+            {
+                "id": "bat_7",
+                "image": "bat_7.png",
+                "name": "Seven of Wands",
+                "nameFr": "Sept de Bâton",
+                "number": 7,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "defense",
+                    "perseverance",
+                    "standing ground",
+                    "challenge"
+                ],
+                "general": "Hold your position. Challenges test what you've built — but you have the high ground. Defend your vision with courage and consistency.",
+                "love": "Defending your relationship or boundaries. Fight for what matters — with love, not fear.",
+                "work": "Your position is challenged. Stand firm on your expertise; persistence outlasts opposition.",
+                "money": "Protect your assets. Others may want what you've earned — stay vigilant.",
+                "spiritual": "Defending your beliefs against doubt. Conviction is forged under pressure."
+            },
+            {
+                "id": "bat_8",
+                "image": "bat_8.png",
+                "name": "Eight of Wands",
+                "nameFr": "Huit de Bâton",
+                "number": 8,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "speed",
+                    "movement",
+                    "news",
+                    "momentum"
+                ],
+                "general": "Everything accelerates. Messages, travel, rapid developments — the pace quickens dramatically. Stay agile and ride the momentum.",
+                "love": "Rapid romantic developments. Messages, declarations, or a whirlwind connection.",
+                "work": "Fast progress and quick communications. Act promptly — windows open and close swiftly.",
+                "money": "Swift financial movements. Quick opportunities require quick but clear-headed responses.",
+                "spiritual": "Rapid spiritual insights. Downloads of clarity — capture them before they pass."
+            },
+            {
+                "id": "bat_9",
+                "image": "bat_9.png",
+                "name": "Nine of Wands",
+                "nameFr": "Neuf de Bâton",
+                "number": 9,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "resilience",
+                    "persistence",
+                    "last stand",
+                    "boundaries"
+                ],
+                "general": "Wounded but standing. You've weathered much and the final test approaches. Your resilience is your greatest asset — one more push.",
+                "love": "Guarded after past wounds. Protect your heart without walling it off completely.",
+                "work": "Fatigue near the finish line. Persevere — you're closer to completion than you think.",
+                "money": "Financial defenses tested. Maintain your reserves; prudence has protected you well.",
+                "spiritual": "Spiritual endurance. Faith tested is faith strengthened."
+            },
+            {
+                "id": "bat_10",
+                "image": "bat_10.png",
+                "name": "Ten of Wands",
+                "nameFr": "Dix de Bâton",
+                "number": 10,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "burden",
+                    "overload",
+                    "responsibility",
+                    "completion"
+                ],
+                "general": "Carrying it all. Success has brought weight — obligations, responsibilities, pressure. Delegate or release what isn't truly yours to carry.",
+                "love": "A relationship feeling heavy with obligations. Share the load or reassess the balance.",
+                "work": "Overwork and burnout risk. You can't do everything — prioritize and delegate.",
+                "money": "Financial burdens accumulating. Simplify obligations before they crush your progress.",
+                "spiritual": "Carrying others' weight. Compassion doesn't require martyrdom."
+            },
+            {
+                "id": "bat_valet",
+                "image": "bat_valet.png",
+                "name": "Page of Wands",
+                "nameFr": "Valet de Bâton",
+                "number": 11,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "enthusiasm",
+                    "exploration",
+                    "news",
+                    "free spirit"
+                ],
+                "general": "The eager messenger. Exciting news or a fresh enthusiasm enters your life. Approach it with curiosity and playful courage.",
+                "love": "A flirtatious, playful energy or exciting romantic news. Someone youthful in spirit approaches.",
+                "work": "A new opportunity to explore. Enthusiasm compensates for inexperience — learn by doing.",
+                "money": "News of financial opportunity. Explore it with optimism but verify the details.",
+                "spiritual": "Beginner's excitement on the path. Curiosity is a spiritual practice."
+            },
+            {
+                "id": "bat_cavalier",
+                "image": "bat_cavalier.png",
+                "name": "Knight of Wands",
+                "nameFr": "Cavalier de Bâton",
+                "number": 12,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "adventure",
+                    "passion",
+                    "impulsiveness",
+                    "action"
+                ],
+                "general": "Full gallop toward adventure. Bold action, passionate pursuit, fearless energy. Magnificent momentum — just watch for the cliff edge.",
+                "love": "A passionate, adventurous lover or whirlwind romance. Thrilling, though perhaps not built to last.",
+                "work": "Bold moves and rapid ventures. Charge ahead — but keep one eye on the details you're tempted to skip.",
+                "money": "Aggressive financial moves. Fortune favors the bold, ruin favors the reckless — know the difference.",
+                "spiritual": "Passionate pursuit of growth. Fire needs direction to become light rather than wildfire."
+            },
+            {
+                "id": "bat_reine",
+                "image": "bat_reine.png",
+                "name": "Queen of Wands",
+                "nameFr": "Reine de Bâton",
+                "number": 13,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "confidence",
+                    "warmth",
+                    "determination",
+                    "charisma"
+                ],
+                "general": "Radiant confidence. The Queen of Wands is magnetic, warm, and fiercely determined. Embody her energy: lead with charisma and unapologetic authenticity.",
+                "love": "A confident, passionate presence in your love life — yours or another's. Attraction through authenticity.",
+                "work": "Lead with warmth and vision. Your natural charisma opens doors that credentials cannot.",
+                "money": "Confident financial management. Your instincts about opportunities are sharp.",
+                "spiritual": "Owning your light. Spiritual confidence that uplifts others rather than dimming them."
+            },
+            {
+                "id": "bat_roi",
+                "image": "bat_roi.png",
+                "name": "King of Wands",
+                "nameFr": "Roi de Bâton",
+                "number": 14,
+                "suit": "wands",
+                "arcana": "minor",
+                "keywords": [
+                    "leadership",
+                    "vision",
+                    "entrepreneurship",
+                    "mastery"
+                ],
+                "general": "The visionary leader. Mastery of creative fire — bold vision executed with experience and natural authority. Think big and act decisively.",
+                "love": "A mature, passionate partner or the call to lead your love life with honest intention.",
+                "work": "Entrepreneurial mastery. Take charge of the grand vision; others will follow your fire.",
+                "money": "Bold but experienced financial leadership. Calculated risks pay off under your command.",
+                "spiritual": "Mastered inner fire. Your presence alone teaches; lead by embodiment."
+            }
+        ],
+        "cups": [
+            {
+                "id": "cou_as",
+                "image": "cou_as.png",
+                "name": "Ace of Cups",
+                "nameFr": "As de Coupe",
+                "number": 1,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "new love",
+                    "emotion",
+                    "intuition",
+                    "overflow"
+                ],
+                "general": "The heart overflows. A new emotional beginning — love, compassion, or creative feeling pours into your life. Receive it with an open heart.",
+                "love": "New love blossoming or a profound emotional renewal. The purest romantic beginning.",
+                "work": "Emotional fulfillment at work, or a project you genuinely love. Follow what moves you.",
+                "money": "Abundance flowing from doing what you love. Generosity returns multiplied.",
+                "spiritual": "Divine love and spiritual opening. Your heart becomes the vessel."
+            },
+            {
+                "id": "cou_2",
+                "image": "cou_2.png",
+                "name": "Two of Cups",
+                "nameFr": "Deux de Coupe",
+                "number": 2,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "partnership",
+                    "connection",
+                    "mutual love",
+                    "harmony"
+                ],
+                "general": "Two hearts meeting as equals. Deep connection, mutual attraction, and balanced exchange. The card of soulful partnership.",
+                "love": "A beautiful mutual connection — the meeting of equals in love. Union, reconciliation, or deepening bond.",
+                "work": "Ideal partnership or collaboration. A working relationship built on genuine mutual respect.",
+                "money": "Beneficial financial partnership. Shared ventures prosper through trust.",
+                "spiritual": "Soul recognition. Some connections mirror your deepest self."
+            },
+            {
+                "id": "cou_3",
+                "image": "cou_3.png",
+                "name": "Three of Cups",
+                "nameFr": "Trois de Coupe",
+                "number": 3,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "celebration",
+                    "friendship",
+                    "community",
+                    "joy"
+                ],
+                "general": "Raise your cups together. Celebration, friendship, and shared joy. Community lifts you — accept the invitation to connect and rejoice.",
+                "love": "Joyful social energy around love. Celebrations, or meeting someone through friends.",
+                "work": "Team success worth celebrating. Collaborative joy and creative synergy.",
+                "money": "Shared abundance. Celebrate wins — prosperity is sweeter in good company.",
+                "spiritual": "Sacred community. Growth accelerates among kindred spirits."
+            },
+            {
+                "id": "cou_4",
+                "image": "cou_4.png",
+                "name": "Four of Cups",
+                "nameFr": "Quatre de Coupe",
+                "number": 4,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "apathy",
+                    "contemplation",
+                    "missed opportunity",
+                    "reevaluation"
+                ],
+                "general": "Staring past the offered cup. Emotional withdrawal or dissatisfaction blinds you to gifts being offered. Look again — what you seek may already be extended toward you.",
+                "love": "Emotional apathy or taking love for granted. An opportunity for connection goes unnoticed.",
+                "work": "Boredom or disengagement. Before dismissing everything, examine what new offer you're overlooking.",
+                "money": "Indifference to opportunities. Reassess — a viable option sits unexamined.",
+                "spiritual": "Spiritual discontent. The gift is present; presence itself is what's missing."
+            },
+            {
+                "id": "cou_5",
+                "image": "cou_5.png",
+                "name": "Five of Cups",
+                "nameFr": "Cinq de Coupe",
+                "number": 5,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "loss",
+                    "grief",
+                    "regret",
+                    "remaining hope"
+                ],
+                "general": "Three cups spilled, two still standing. Grief and regret are real — honor them. But when you're ready, turn around: not everything is lost.",
+                "love": "Mourning a loss or disappointment in love. Feel it fully, then notice what remains worth keeping.",
+                "work": "A setback or failure stings. Extract the lesson; salvageable elements remain.",
+                "money": "Financial loss or regret. Assess the damage honestly — the foundation survives.",
+                "spiritual": "Sacred grief. Loss carves the depth that later holds compassion."
+            },
+            {
+                "id": "cou_6",
+                "image": "cou_6.png",
+                "name": "Six of Cups",
+                "nameFr": "Six de Coupe",
+                "number": 6,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "nostalgia",
+                    "memories",
+                    "innocence",
+                    "reunion"
+                ],
+                "general": "The sweetness of memory. The past visits — nostalgia, childhood echoes, or someone returning. Draw warmth from what was without living there.",
+                "love": "A past love resurfaces, or a relationship with innocent, tender energy. Sweet familiarity.",
+                "work": "Past connections bring opportunities. Skills or contacts from before prove valuable again.",
+                "money": "Financial help from family or past sources. Old investments may resurface favorably.",
+                "spiritual": "Inner child healing. Your original innocence remains intact beneath the years."
+            },
+            {
+                "id": "cou_7",
+                "image": "cou_7.png",
+                "name": "Seven of Cups",
+                "nameFr": "Sept de Coupe",
+                "number": 7,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "choices",
+                    "illusion",
+                    "fantasy",
+                    "wishful thinking"
+                ],
+                "general": "Seven cups of dreams — but which are real? Options multiply, fantasies seduce. Clarity requires choosing one cup and releasing the mirage of all others.",
+                "love": "Romantic fantasies or too many options. Idealization blurs judgment — ground your choices in reality.",
+                "work": "Multiple opportunities, all glittering. Evaluate substance over shine before committing.",
+                "money": "Get-rich dreams and scattered investments. Focus beats fantasy every time.",
+                "spiritual": "Spiritual window-shopping. Depth comes from one committed path, not sampling all."
+            },
+            {
+                "id": "cou_8",
+                "image": "cou_8.png",
+                "name": "Eight of Cups",
+                "nameFr": "Huit de Coupe",
+                "number": 8,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "departure",
+                    "seeking",
+                    "leaving behind",
+                    "deeper meaning"
+                ],
+                "general": "Walking away from the full cups. What you built no longer nourishes you. The courageous departure toward deeper meaning begins — trust the calling.",
+                "love": "Leaving an emotionally exhausted relationship, or seeking deeper connection than currently offered.",
+                "work": "Walking away from success that feels hollow. Meaning matters more than comfort now.",
+                "money": "Leaving financial security for fulfillment. Plan the transition, but honor the call.",
+                "spiritual": "The seeker's departure. The quest for meaning requires leaving familiar shores."
+            },
+            {
+                "id": "cou_9",
+                "image": "cou_9.png",
+                "name": "Nine of Cups",
+                "nameFr": "Neuf de Coupe",
+                "number": 9,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "satisfaction",
+                    "wishes fulfilled",
+                    "contentment",
+                    "pleasure"
+                ],
+                "general": "The wish card. Emotional satisfaction, pleasures enjoyed, desires fulfilled. Savor this contentment — you've earned the smile.",
+                "love": "Deep romantic satisfaction. Your emotional wishes materialize — enjoy without grasping.",
+                "work": "Professional wishes granted. Satisfaction in achievement; success feels as good as imagined.",
+                "money": "Material comfort and financial wishes fulfilled. Abundance with genuine enjoyment.",
+                "spiritual": "Gratitude embodied. Contentment as a spiritual achievement, not a complacency."
+            },
+            {
+                "id": "cou_10",
+                "image": "cou_10.png",
+                "name": "Ten of Cups",
+                "nameFr": "Dix de Coupe",
+                "number": 10,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "harmony",
+                    "family",
+                    "lasting happiness",
+                    "emotional fulfillment"
+                ],
+                "general": "The rainbow of cups. Complete emotional fulfillment — family harmony, lasting love, the happy ending that's actually a happy continuing.",
+                "love": "Lasting happiness in love. Family, commitment, and emotional completeness — the full picture.",
+                "work": "Work-life harmony achieved. Success that includes wellbeing, not despite it.",
+                "money": "Financial peace supporting family happiness. Wealth measured in wellbeing.",
+                "spiritual": "Wholeness through love. The divine expressed in everyday connection."
+            },
+            {
+                "id": "cou_valet",
+                "image": "cou_valet.png",
+                "name": "Page of Cups",
+                "nameFr": "Valet de Coupe",
+                "number": 11,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "creative message",
+                    "sensitivity",
+                    "surprise",
+                    "imagination"
+                ],
+                "general": "The fish in the cup — an unexpected message from the heart. Creative inspiration, emotional surprise, or intuitive nudge. Stay open to whimsy.",
+                "love": "A sweet romantic surprise or message. Tender beginnings, playful sensitivity.",
+                "work": "Creative inspiration or unexpected offer. Approach with fresh eyes and emotional intelligence.",
+                "money": "Surprising financial news. A modest but meaningful opportunity appears.",
+                "spiritual": "Messages from the unconscious. Dreams and synchronicities carry guidance."
+            },
+            {
+                "id": "cou_cavalier",
+                "image": "cou_cavalier.png",
+                "name": "Knight of Cups",
+                "nameFr": "Cavalier de Coupe",
+                "number": 12,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "romance",
+                    "charm",
+                    "idealism",
+                    "invitation"
+                ],
+                "general": "The romantic knight arrives bearing his heart. Charm, invitation, and idealistic pursuit — beautiful energy, though verify the substance behind the poetry.",
+                "love": "A romantic proposal or charming suitor. Courtship in its most poetic form — enjoy while staying clear-eyed.",
+                "work": "An appealing offer arrives. Diplomatic, creative approaches succeed over aggressive ones.",
+                "money": "An attractive financial proposition. Verify the foundations beneath the charm.",
+                "spiritual": "Following the heart's quest. Idealism as fuel — with discernment as compass."
+            },
+            {
+                "id": "cou_reine",
+                "image": "cou_reine.png",
+                "name": "Queen of Cups",
+                "nameFr": "Reine de Coupe",
+                "number": 13,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "compassion",
+                    "emotional depth",
+                    "intuition",
+                    "nurturing"
+                ],
+                "general": "The heart's sovereign. Profound emotional intelligence, compassion, and intuitive mastery. Lead with empathy — it is strength, not softness.",
+                "love": "Deep emotional connection and nurturing love. A profoundly caring presence — embody or embrace it.",
+                "work": "Emotional intelligence as professional superpower. Support others while maintaining your boundaries.",
+                "money": "Intuitive financial sense. Trust gut feelings about opportunities and people.",
+                "spiritual": "The compassionate heart. Healing others through presence and deep listening."
+            },
+            {
+                "id": "cou_roi",
+                "image": "cou_roi.png",
+                "name": "King of Cups",
+                "nameFr": "Roi de Coupe",
+                "number": 14,
+                "suit": "cups",
+                "arcana": "minor",
+                "keywords": [
+                    "emotional mastery",
+                    "wisdom",
+                    "diplomacy",
+                    "calm"
+                ],
+                "general": "Calm seas run deep. The King of Cups masters emotion without suppressing it — wise, diplomatic, generous. Steady the storm with your presence.",
+                "love": "A mature, emotionally balanced partner or the call to love with wisdom and steadiness.",
+                "work": "Diplomatic leadership. Navigate conflicts with calm authority and emotional maturity.",
+                "money": "Balanced financial stewardship. Neither fear nor greed — measured wisdom prevails.",
+                "spiritual": "Emotional alchemy mastered. Feeling everything, drowning in nothing."
+            }
+        ],
+        "pentacles": [
+            {
+                "id": "den_as",
+                "image": "den_as.png",
+                "name": "Ace of Pentacles",
+                "nameFr": "As de Denier",
+                "number": 1,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "opportunity",
+                    "prosperity",
+                    "new venture",
+                    "manifestation"
+                ],
+                "general": "A golden seed is offered. New material opportunity — financial, professional, or physical. Plant it in solid ground and tend it patiently.",
+                "love": "A relationship with solid, tangible potential. Love built on stable ground.",
+                "work": "A concrete new opportunity — job, contract, or venture. Excellent foundations for growth.",
+                "money": "New income source or investment opportunity. The seed of real prosperity — nurture it.",
+                "spiritual": "Spirit manifesting in matter. The sacred found in the tangible world."
+            },
+            {
+                "id": "den_2",
+                "image": "den_2.png",
+                "name": "Two of Pentacles",
+                "nameFr": "Deux de Denier",
+                "number": 2,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "balance",
+                    "juggling",
+                    "adaptability",
+                    "priorities"
+                ],
+                "general": "The eternal juggle. Multiple demands compete for your resources — time, money, energy. Graceful adaptation keeps the dance going; rigidity drops the balls.",
+                "love": "Balancing love with life's other demands. Flexibility keeps the relationship flowing.",
+                "work": "Juggling projects or roles. Prioritize consciously — you can do anything, not everything.",
+                "money": "Balancing budgets and cash flow. Stay nimble; adjust as circumstances shift.",
+                "spiritual": "Equilibrium as practice. Balance is a verb, not a state."
+            },
+            {
+                "id": "den_3",
+                "image": "den_3.png",
+                "name": "Three of Pentacles",
+                "nameFr": "Trois de Denier",
+                "number": 3,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "teamwork",
+                    "craftsmanship",
+                    "collaboration",
+                    "skill"
+                ],
+                "general": "The cathedral rises through many hands. Skilled collaboration, craftsmanship recognized, and plans becoming structure. Your expertise matters to the whole.",
+                "love": "Building the relationship deliberately, together. Love as shared craftsmanship.",
+                "work": "Successful teamwork and recognized skill. Your competence earns its place in bigger projects.",
+                "money": "Prosperity through collaboration and skill development. Quality work attracts quality pay.",
+                "spiritual": "Sacred work. Excellence in craft as a form of devotion."
+            },
+            {
+                "id": "den_4",
+                "image": "den_4.png",
+                "name": "Four of Pentacles",
+                "nameFr": "Quatre de Denier",
+                "number": 4,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "security",
+                    "control",
+                    "holding on",
+                    "conservation"
+                ],
+                "general": "Gripping the coins tightly. Security achieved — but examine the cost of holding so hard. Stability is wise; hoarding starves the flow.",
+                "love": "Possessiveness or fear of losing love. Security in relationships comes from trust, not grip.",
+                "work": "Protecting your position or resisting change. Consolidate, but don't calcify.",
+                "money": "Saving and conserving — wise to a point. Money hoarded in fear cannot grow.",
+                "spiritual": "Attachment examined. What you cannot release owns you."
+            },
+            {
+                "id": "den_5",
+                "image": "den_5.png",
+                "name": "Five of Pentacles",
+                "nameFr": "Cinq de Denier",
+                "number": 5,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "hardship",
+                    "lack",
+                    "exclusion",
+                    "hidden help"
+                ],
+                "general": "Out in the cold — but the lit window is right there. Material hardship or feeling excluded. Help exists closer than you think; pride is the only lock on the door.",
+                "love": "Feeling unloved or left out in the cold. Reach out — isolation is partly self-imposed.",
+                "work": "Job insecurity or feeling professionally excluded. Support networks exist — use them.",
+                "money": "Financial strain. Temporary if addressed — seek help early rather than suffering silently.",
+                "spiritual": "The dark night of the soul. Even here, especially here, grace waits."
+            },
+            {
+                "id": "den_6",
+                "image": "den_6.png",
+                "name": "Six of Pentacles",
+                "nameFr": "Six de Denier",
+                "number": 6,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "generosity",
+                    "giving",
+                    "receiving",
+                    "fairness"
+                ],
+                "general": "The balanced scales of giving. Generosity flows — you may be giver or receiver. Honor both roles; today's helper is tomorrow's helped.",
+                "love": "Generous, balanced exchange in love. Give and receive in equal measure.",
+                "work": "Mentorship, fair deals, or help offered. Share your success; support arrives when needed.",
+                "money": "Financial help given or received. Charity, loans, or fair redistribution — flow restores balance.",
+                "spiritual": "Generosity as spiritual law. What flows through you enriches you."
+            },
+            {
+                "id": "den_7",
+                "image": "den_7.png",
+                "name": "Seven of Pentacles",
+                "nameFr": "Sept de Denier",
+                "number": 7,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "patience",
+                    "assessment",
+                    "long-term view",
+                    "investment"
+                ],
+                "general": "Leaning on the hoe, evaluating the harvest. Pause and assess — is this crop worth continued tending? Patience is a strategy, but so is redirecting effort.",
+                "love": "Evaluating where the relationship is growing. Invest deeper or redirect — decide consciously.",
+                "work": "Assessing long-term projects. Results are forming slowly — verify the direction before continuing.",
+                "money": "Investments maturing gradually. Review the portfolio; patience pays, but only on the right crops.",
+                "spiritual": "The slow ripening. Growth invisible today becomes obvious in seasons."
+            },
+            {
+                "id": "den_8",
+                "image": "den_8.png",
+                "name": "Eight of Pentacles",
+                "nameFr": "Huit de Denier",
+                "number": 8,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "mastery",
+                    "diligence",
+                    "skill-building",
+                    "dedication"
+                ],
+                "general": "The apprentice becomes master, coin by coin. Diligent, focused work on your craft. Repetition with attention builds excellence — keep carving.",
+                "love": "Working on the relationship with dedication. Love as daily practice, not just feeling.",
+                "work": "Skill refinement and diligent effort. Mastery is being forged — your dedication is noticed.",
+                "money": "Income through developed expertise. Invest in your skills; they compound like interest.",
+                "spiritual": "Practice as path. Devotion expressed through disciplined repetition."
+            },
+            {
+                "id": "den_9",
+                "image": "den_9.png",
+                "name": "Nine of Pentacles",
+                "nameFr": "Neuf de Denier",
+                "number": 9,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "independence",
+                    "luxury",
+                    "self-sufficiency",
+                    "refinement"
+                ],
+                "general": "The garden of earned abundance. Self-sufficiency, refined pleasure, independence built through discipline. Enjoy the fruits — you planted every vine.",
+                "love": "Self-sufficient and whole, with or without a partner. Attraction through independence.",
+                "work": "Professional autonomy achieved. Your track record speaks; enjoy the freedom it bought.",
+                "money": "Financial independence within reach. Comfort earned honestly — savor it elegantly.",
+                "spiritual": "Wholeness cultivated alone. Solitude as luxury, not lack."
+            },
+            {
+                "id": "den_10",
+                "image": "den_10.png",
+                "name": "Ten of Pentacles",
+                "nameFr": "Dix de Denier",
+                "number": 10,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "legacy",
+                    "wealth",
+                    "family",
+                    "long-term success"
+                ],
+                "general": "The family estate. Lasting wealth, legacy, and multigenerational stability. What you build now outlives you — think in decades, not days.",
+                "love": "Love woven into family and legacy. Deep commitment with roots and branches.",
+                "work": "Established success and lasting institutions. Build systems that endure beyond your presence.",
+                "money": "Generational wealth and solid assets. Estate planning, property, and legacy investments favored.",
+                "spiritual": "The ancestral thread. You are a link in a chain longer than one life."
+            },
+            {
+                "id": "den_valet",
+                "image": "den_valet.png",
+                "name": "Page of Pentacles",
+                "nameFr": "Valet de Denier",
+                "number": 11,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "study",
+                    "new skill",
+                    "opportunity",
+                    "diligence"
+                ],
+                "general": "The studious apprentice examines the coin. A new skill, course of study, or practical opportunity begins. Approach it with grounded curiosity.",
+                "love": "A steady, sincere romantic interest. Slow-building affection with real potential.",
+                "work": "Learning opportunities or an entry-level opening with growth potential. Study pays off.",
+                "money": "Small but promising financial beginning. Learn the fundamentals before scaling.",
+                "spiritual": "Grounded learning. Wisdom built through study and embodied practice."
+            },
+            {
+                "id": "den_cavalier",
+                "image": "den_cavalier.png",
+                "name": "Knight of Pentacles",
+                "nameFr": "Cavalier de Denier",
+                "number": 12,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "reliability",
+                    "routine",
+                    "persistence",
+                    "methodical progress"
+                ],
+                "general": "The slowest knight — and the one who always arrives. Methodical, reliable progress. No shortcuts, no drama, just relentless steady advance.",
+                "love": "A dependable, loyal partner. Unspectacular perhaps, but profoundly trustworthy.",
+                "work": "Consistent, thorough effort. The reliable performer who ultimately outlasts the flashy ones.",
+                "money": "Conservative, steady financial growth. Boring investments that quietly compound.",
+                "spiritual": "Devotion through consistency. Showing up daily is the deepest practice."
+            },
+            {
+                "id": "den_reine",
+                "image": "den_reine.png",
+                "name": "Queen of Pentacles",
+                "nameFr": "Reine de Denier",
+                "number": 13,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "nurturing abundance",
+                    "practicality",
+                    "comfort",
+                    "resourcefulness"
+                ],
+                "general": "The generous mother of the material world. Practical nurturing, warm abundance, resourceful care. Create comfort for yourself and others — prosperity shared is prosperity doubled.",
+                "love": "A nurturing, grounded love. Care expressed through practical devotion and warm presence.",
+                "work": "Resourceful management and creating supportive environments. Practicality with heart.",
+                "money": "Skilled, warm-handed money management. Providing security for those you love.",
+                "spiritual": "The sacred homemaker. Heaven built in daily, tangible acts of care."
+            },
+            {
+                "id": "den_roi",
+                "image": "den_roi.png",
+                "name": "King of Pentacles",
+                "nameFr": "Roi de Denier",
+                "number": 14,
+                "suit": "pentacles",
+                "arcana": "minor",
+                "keywords": [
+                    "wealth",
+                    "mastery",
+                    "security",
+                    "leadership"
+                ],
+                "general": "The Midas who learned wisdom. Material mastery, established wealth, and grounded leadership. Your empire is built — rule it with generosity and vision.",
+                "love": "A stable, generous provider or protector. Love expressed through security and steadfastness.",
+                "work": "Business mastery and established authority. Your experience commands respect and results.",
+                "money": "Wealth consolidated and growing. The golden touch, disciplined by decades of wisdom.",
+                "spiritual": "Abundance as stewardship. Wealth held lightly, wielded wisely."
+            }
+        ],
+        "swords": [
+            {
+                "id": "epe_as",
+                "image": "epe_as.png",
+                "name": "Ace of Swords",
+                "nameFr": "As d'Épée",
+                "number": 1,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "clarity",
+                    "truth",
+                    "breakthrough",
+                    "mental power"
+                ],
+                "general": "The sword of truth cuts through. Mental clarity, breakthrough insight, decisive understanding. Wield this sharp new perspective with precision.",
+                "love": "Clarity about your feelings or the relationship's truth. Honest conversation cuts through confusion.",
+                "work": "A breakthrough idea or decisive clarity. Cut through complexity — the sharp solution is the right one.",
+                "money": "Clear financial thinking. See through the fog — the numbers tell the truth.",
+                "spiritual": "Piercing insight. Truth as blade: it cuts, and it frees."
+            },
+            {
+                "id": "epe_2",
+                "image": "epe_2.png",
+                "name": "Two of Swords",
+                "nameFr": "Deux d'Épée",
+                "number": 2,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "stalemate",
+                    "difficult choice",
+                    "avoidance",
+                    "blocked emotions"
+                ],
+                "general": "Blindfolded between two blades. A decision avoided is a decision deferred, not escaped. Remove the blindfold — the choice awaits your courage.",
+                "love": "Torn between options or avoiding a relationship truth. The impasse breaks only when you look.",
+                "work": "A stalemate or postponed decision. More information helps, but eventually you must choose.",
+                "money": "Financial indecision. Weigh options, set a deadline, and commit.",
+                "spiritual": "Willful blindness examined. Peace requires seeing, not avoiding."
+            },
+            {
+                "id": "epe_3",
+                "image": "epe_3.png",
+                "name": "Three of Swords",
+                "nameFr": "Trois d'Épée",
+                "number": 3,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "heartbreak",
+                    "sorrow",
+                    "painful truth",
+                    "grief"
+                ],
+                "general": "The pierced heart. Pain, heartbreak, or a truth that wounds. The storm is real — but hearts, unlike glass, heal stronger at the broken places.",
+                "love": "Heartbreak, betrayal, or painful separation. Grieve fully — this pain carries a necessary truth.",
+                "work": "A professional wound — harsh criticism, betrayal, or loss. Painful clarity about who and what to trust.",
+                "money": "A financial blow or costly truth revealed. Absorb the loss and extract the lesson.",
+                "spiritual": "Sacred wounding. Some truths must break the heart to open it."
+            },
+            {
+                "id": "epe_4",
+                "image": "epe_4.png",
+                "name": "Four of Swords",
+                "nameFr": "Quatre d'Épée",
+                "number": 4,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "rest",
+                    "recovery",
+                    "contemplation",
+                    "retreat"
+                ],
+                "general": "The knight rests, swords sheathed. Mandatory recovery — mental, physical, spiritual. Rest is not surrender; it's how warriors prepare for what's next.",
+                "love": "A relationship pause for healing. Space and quiet restore what tension eroded.",
+                "work": "Burnout warning. Step back before you're forced to — strategic rest sharpens the blade.",
+                "money": "Pause major financial activity. Let things settle before the next move.",
+                "spiritual": "Contemplative stillness. In silence, the deepest repairs occur."
+            },
+            {
+                "id": "epe_5",
+                "image": "epe_5.png",
+                "name": "Five of Swords",
+                "nameFr": "Cinq d'Épée",
+                "number": 5,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "conflict",
+                    "hollow victory",
+                    "discord",
+                    "ego"
+                ],
+                "general": "Winning the battle, losing the field. A conflict where victory costs more than defeat. Examine whether this fight serves you — or only your ego.",
+                "love": "Destructive arguments where winning means losing. Choose the relationship over being right.",
+                "work": "Toxic competition or a pyrrhic victory. Some battles diminish everyone — walk away from those.",
+                "money": "Disputes over money. Legal wins or hard bargains that poison relationships — weigh the true cost.",
+                "spiritual": "Ego's victories examined. What the ego wins, the soul often pays for."
+            },
+            {
+                "id": "epe_6",
+                "image": "epe_6.png",
+                "name": "Six of Swords",
+                "nameFr": "Six d'Épée",
+                "number": 6,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "transition",
+                    "moving on",
+                    "passage",
+                    "gradual healing"
+                ],
+                "general": "The boat crosses to calmer waters. A necessary transition away from turbulence. The passage is quiet, even melancholy — but the far shore is kinder.",
+                "love": "Moving on from difficulty — together toward better dynamics, or apart toward peace.",
+                "work": "Transitioning roles, jobs, or environments. The move is right even if bittersweet.",
+                "money": "Leaving financial trouble behind gradually. Steady progress toward stability.",
+                "spiritual": "The soul's migration. Healing happens in movement, one quiet mile at a time."
+            },
+            {
+                "id": "epe_7",
+                "image": "epe_7.png",
+                "name": "Seven of Swords",
+                "nameFr": "Sept d'Épée",
+                "number": 7,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "deception",
+                    "strategy",
+                    "stealth",
+                    "cunning"
+                ],
+                "general": "The thief in the camp. Deception, strategy, or something taken unnoticed. Sharpen your awareness — and examine your own shortcuts too.",
+                "love": "Secrets or avoidance in the relationship. Hidden things surface eventually — choose honesty first.",
+                "work": "Office politics or someone acting behind scenes. Protect your work; verify loyalties discreetly.",
+                "money": "Risk of fraud or hidden costs. Read the fine print; trust but verify.",
+                "spiritual": "Self-deception exposed. The subtlest thief is the story you tell yourself."
+            },
+            {
+                "id": "epe_8",
+                "image": "epe_8.png",
+                "name": "Eight of Swords",
+                "nameFr": "Huit d'Épée",
+                "number": 8,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "restriction",
+                    "self-imposed limits",
+                    "victim mindset",
+                    "trapped"
+                ],
+                "general": "Bound and blindfolded — but the ropes are loose. Restriction that is largely mental. The prison is real to you, but the door was never locked.",
+                "love": "Feeling trapped in a relationship pattern. The constraints are more habit than reality — test them.",
+                "work": "Feeling stuck without options. Your perceived limits are narrower than your actual ones.",
+                "money": "Financial paralysis from fear. Options exist — analysis reveals them, anxiety hides them.",
+                "spiritual": "The mind-forged manacles. Liberation begins with questioning the story of imprisonment."
+            },
+            {
+                "id": "epe_9",
+                "image": "epe_9.png",
+                "name": "Nine of Swords",
+                "nameFr": "Neuf d'Épée",
+                "number": 9,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "anxiety",
+                    "worry",
+                    "sleepless nights",
+                    "mental anguish"
+                ],
+                "general": "The 3 AM terrors. Anxiety and worry magnified in the dark. Most feared catastrophes never arrive — daylight and perspective shrink the shadows.",
+                "love": "Relationship anxieties spiraling. Talk instead of ruminating — reality is gentler than 3 AM imagination.",
+                "work": "Work stress invading your peace. Separate real problems (solvable) from imagined ones (dissolvable).",
+                "money": "Financial anxiety exceeding financial reality. Face the actual numbers — they're rarely as bad as the dread.",
+                "spiritual": "The dark night examined. Even here, dawn is already approaching."
+            },
+            {
+                "id": "epe_10",
+                "image": "epe_10.png",
+                "name": "Ten of Swords",
+                "nameFr": "Dix d'Épée",
+                "number": 10,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "ending",
+                    "rock bottom",
+                    "release",
+                    "dawn after darkness"
+                ],
+                "general": "The absolute end — and therefore, the beginning. Rock bottom reached; the worst has happened and you're still here. Nothing remains but to rise.",
+                "love": "The definitive end of a chapter. Painful finality — but finality is also freedom.",
+                "work": "A project or role definitively over. Total closure clears ground for total renewal.",
+                "money": "A financial cycle bottoms out. From here, the only movement is upward — rebuild wiser.",
+                "spiritual": "Ego's surrender complete. What survives the worst is what was always true."
+            },
+            {
+                "id": "epe_valet",
+                "image": "epe_valet.png",
+                "name": "Page of Swords",
+                "nameFr": "Valet d'Épée",
+                "number": 11,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "curiosity",
+                    "vigilance",
+                    "new ideas",
+                    "mental energy"
+                ],
+                "general": "The alert scout. Curious, vigilant, mentally quick. New information or ideas demand investigation — stay sharp and question everything.",
+                "love": "Curiosity and lively communication in love. Verify intentions — words fly fast here.",
+                "work": "New ideas and information to explore. Research thoroughly; the details hold the advantage.",
+                "money": "Financial news requiring scrutiny. Investigate before investing.",
+                "spiritual": "The questioning mind as path. Doubt honestly held is a form of devotion."
+            },
+            {
+                "id": "epe_cavalier",
+                "image": "epe_cavalier.png",
+                "name": "Knight of Swords",
+                "nameFr": "Cavalier d'Épée",
+                "number": 12,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "ambition",
+                    "speed",
+                    "directness",
+                    "intellectual force"
+                ],
+                "general": "The charging blade. Swift, direct, intellectually fierce action. Powerful when aimed true — devastating when aimed carelessly. Charge, but know your target.",
+                "love": "Intense, fast-moving romantic pursuit. Exciting — ensure the speed doesn't skip the depth.",
+                "work": "Aggressive progress and sharp execution. Push hard, but don't mow down allies en route.",
+                "money": "Fast, decisive financial moves. Speed wins opportunities — and compounds mistakes. Aim first.",
+                "spiritual": "The warrior mind. Truth pursued at full gallop — remember to occasionally dismount."
+            },
+            {
+                "id": "epe_reine",
+                "image": "epe_reine.png",
+                "name": "Queen of Swords",
+                "nameFr": "Reine d'Épée",
+                "number": 13,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "clarity",
+                    "independence",
+                    "direct communication",
+                    "discernment"
+                ],
+                "general": "The clear-eyed sovereign. Sharp perception, honest speech, and independence forged through experience. See truly, speak precisely, tolerate no illusions.",
+                "love": "Clear boundaries and honest communication in love. Independence within intimacy.",
+                "work": "Objective judgment and articulate leadership. Your clarity cuts through office fog.",
+                "money": "Unsentimental financial analysis. Decisions from facts, not feelings — it serves you well.",
+                "spiritual": "Discernment as practice. Compassion with clear eyes, kindness without naivety."
+            },
+            {
+                "id": "epe_roi",
+                "image": "epe_roi.png",
+                "name": "King of Swords",
+                "nameFr": "Roi d'Épée",
+                "number": 14,
+                "suit": "swords",
+                "arcana": "minor",
+                "keywords": [
+                    "intellectual authority",
+                    "truth",
+                    "ethics",
+                    "strategic mind"
+                ],
+                "general": "The supreme strategist. Intellectual mastery, ethical authority, and judgment refined by experience. Rule with reason — tempered by justice.",
+                "love": "A rational, principled partner or the need for clear-headed love decisions.",
+                "work": "Strategic authority and expert judgment. Lead with logic, standards, and intellectual honesty.",
+                "money": "Masterful financial strategy. Systems and rules, consistently applied, build empires.",
+                "spiritual": "Wisdom as sovereignty. The mind in service of truth, not ego."
+            }
+        ]
+    },
+    "spreadPositions": {
+        "threeCard": [
+            {
+                "position": 1,
+                "name": "Past",
+                "meaning": "The influences and events that shaped the current situation"
+            },
+            {
+                "position": 2,
+                "name": "Present",
+                "meaning": "The current energies and the heart of the matter"
+            },
+            {
+                "position": 3,
+                "name": "Future",
+                "meaning": "The direction things are heading if the current path continues"
+            }
+        ]
+    },
+    "themes": [
+        {
+            "id": "love",
+            "name": "Love",
+            "icon": "heart",
+            "accentColor": "#8B1E3F",
+            "questionPlaceholder": "What would you like to know about your love life?"
+        },
+        {
+            "id": "work",
+            "name": "Career",
+            "icon": "briefcase",
+            "accentColor": "#1E5F8B",
+            "questionPlaceholder": "What guidance do you seek about your career?"
+        },
+        {
+            "id": "money",
+            "name": "Money",
+            "icon": "coins",
+            "accentColor": "#B8860B",
+            "questionPlaceholder": "What would you like to know about your finances?"
+        },
+        {
+            "id": "spiritual",
+            "name": "Spiritual",
+            "icon": "sparkles",
+            "accentColor": "#4B3B8B",
+            "questionPlaceholder": "What does your soul seek to understand?"
+        },
+        {
+            "id": "general",
+            "name": "Open Question",
+            "icon": "moon",
+            "accentColor": "#2E6B4F",
+            "questionPlaceholder": "Ask the cards anything..."
+        }
+    ]
+}
