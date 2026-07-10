@@ -1,0 +1,11 @@
+# Browserslist — tells SWC (Next.js bundler) which JS syntax to keep
+# vs down-level. Without this, Next.js 14 defaults to es5 which doesn't
+# support ?? (nullish coalescing), ?. (optional chaining) inside template
+# literals, etc.
+
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+not dead
+not IE 11
