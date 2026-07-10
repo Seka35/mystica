@@ -23,15 +23,6 @@ interface Props {
 
 const PALETTE = ['#8B6914', '#C8963C', '#F0C040', '#D4A857', '#E8C97A']
 
-// Cross positions for 5-card layout: 5 top, 2 left, 1 center, 4 right, 3 bottom
-const CROSS_5 = [
-  { top: '0%',    left: '50%',   transform: 'translate(-50%, 0)' },       // 5 top
-  { top: '50%',   left: '0%',    transform: 'translate(0, -50%)' },       // 2 left
-  { top: '50%',   left: '50%',   transform: 'translate(-50%, -50%)' },    // 1 center
-  { top: '50%',   left: '100%',  transform: 'translate(-100%, -50%)' },  // 4 right
-  { top: '100%',  left: '50%',   transform: 'translate(-50%, -100%)' },   // 3 bottom
-]
-
 export default function StepDraw({
   spread, drawnCards, onReveal, onFlipSound, allRevealed, onNext, question,
 }: Props) {
@@ -88,32 +79,36 @@ export default function StepDraw({
 
       {spread.cardCount === 5 && (
         isMobile ? (
-          // Mobile vertical order: 3, 1, 2, 4, 5
+          // Mobile: vertical stack in reading order 1→2→3→4→5
           <div className="flex flex-col gap-4 mb-8 items-center">
-            {[2, 0, 1, 3, 4].map((i) => (
-              <CardColumn key={drawnCards[i].position} drawn={drawnCards[i]} index={i}
+            {drawnCards.map((d, i) => (
+              <CardColumn key={d.position} drawn={d} index={i}
                 color={PALETTE[i]} question={question}
                 onReveal={onReveal} onFlipSound={onFlipSound}
                 compact />
             ))}
           </div>
         ) : (
-          // Desktop cross layout
-          <div
-            className="relative mb-8"
-            style={{ width: 520, height: 520 }}
-          >
-            {CROSS_5.map((cs, i) => (
-              <div
-                key={i}
-                className="absolute"
-                style={{ top: cs.top, left: cs.left, transform: cs.transform }}
-              >
-                <CardColumn drawn={drawnCards[i]} index={i}
+          // Desktop: clean 2+3 grid, no overlap, reading order 1→2→3→4→5
+          //   Row 1 (2 cards):  The Situation, The Obstacle
+          //   Row 2 (3 cards):  The Root, The Path, The Synthesis
+          <div className="flex flex-col items-center gap-6 mb-8">
+            <div className="flex justify-center gap-4 md:gap-6">
+              {[0, 1].map((i) => (
+                <CardColumn key={drawnCards[i].position} drawn={drawnCards[i]} index={i}
                   color={PALETTE[i]} question={question}
-                  onReveal={onReveal} onFlipSound={onFlipSound} />
-              </div>
-            ))}
+                  onReveal={onReveal} onFlipSound={onFlipSound}
+                  compact />
+              ))}
+            </div>
+            <div className="flex justify-center gap-4 md:gap-6">
+              {[2, 3, 4].map((i) => (
+                <CardColumn key={drawnCards[i].position} drawn={drawnCards[i]} index={i}
+                  color={PALETTE[i]} question={question}
+                  onReveal={onReveal} onFlipSound={onFlipSound}
+                  compact />
+              ))}
+            </div>
           </div>
         )
       )}
