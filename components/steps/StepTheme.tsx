@@ -15,11 +15,13 @@ const THEME_ICONS: Record<Theme, string> = {
   work: '⚡',
   money: '◈',
   spiritual: '✦',
-  free: '∞',
+  death: '💀',
+  sex: '🔥',
   horoscope: '✨',
+  free: '∞',
 }
 
-const THEME_ORDER: Theme[] = ['love', 'work', 'money', 'spiritual', 'horoscope', 'free']
+const THEME_ORDER: Theme[] = ['love', 'sex', 'work', 'money', 'spiritual', 'death', 'horoscope', 'free']
 
 export default function StepTheme({ selected, onSelect }: Props) {
   return (

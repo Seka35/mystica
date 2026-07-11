@@ -1,6 +1,6 @@
 // lib/types.ts
 
-export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free' | 'horoscope'
+export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free' | 'horoscope' | 'death' | 'sex'
 export type Position = string  // spread-defined (e.g. "Past", "The Obstacle")
 export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
@@ -74,5 +74,17 @@ export const THEME_CONFIG: Record<Theme, { label: string; color: string; accent:
     color: '#2A1A6B',
     accent: '#9D4DFF',
     placeholder: 'Discover the energies surrounding your zodiac sign today.',
+  },
+  death: {
+    label: 'Death / Endings',
+    color: '#000000',
+    accent: '#8C8C8C',
+    placeholder: 'What must end for something new to begin? Ask about loss or transformation.',
+  },
+  sex: {
+    label: 'Sex / Intimacy',
+    color: '#6B001A',
+    accent: '#FF3366',
+    placeholder: 'Ask about desire, passion, intimacy, or connection.',
   },
 }
