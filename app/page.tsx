@@ -57,7 +57,8 @@ export default function Page() {
   const resetReading = useCallback(() => {
     streamAbortRef.current?.abort()
     streamAbortRef.current = null
-    audio.stop('ambient')
+    audio.stop('voodoo_drums')
+    audio.play('ambient')
     setInterpretation('')
     setIsStreaming(false)
     setDrawnCards([])

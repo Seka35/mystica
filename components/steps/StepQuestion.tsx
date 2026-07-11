@@ -44,14 +44,14 @@ export default function StepQuestion({ theme, question, onChange, onNext, onBack
         className="text-center mb-8"
       >
         <div className="text-[var(--text-muted)] font-oracle text-xs tracking-[0.4em] mb-4 opacity-60">
-          ✦ &nbsp; {theme === 'voodoo' ? 'THE PETITION' : 'STEP THREE'} &nbsp; ✦
+          ✦ &nbsp; {theme === 'voodoo' ? 'THE CURSE OR BLESSING' : 'STEP THREE'} &nbsp; ✦
         </div>
         <h2 className="font-oracle text-3xl md:text-4xl gold-text mb-3">
-          {theme === 'voodoo' ? 'State Your Petition' : 'Ask Your Question'}
+          {theme === 'voodoo' ? 'State Your Intent' : 'Ask Your Question'}
         </h2>
         <p className="text-[var(--text-muted)] italic font-body text-lg max-w-md">
           {theme === 'voodoo' 
-            ? 'Speak clearly. The spirits appreciate precision.' 
+            ? 'What do you desire? A blessing for you, or a hex for another? The spirits do not judge.' 
             : 'The more precise your question, the deeper the oracle\'s sight.'}
         </p>
       </motion.div>
