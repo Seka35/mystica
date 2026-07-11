@@ -44,13 +44,15 @@ export default function StepQuestion({ theme, question, onChange, onNext, onBack
         className="text-center mb-8"
       >
         <div className="text-[var(--text-muted)] font-oracle text-xs tracking-[0.4em] mb-4 opacity-60">
-          ✦ &nbsp; STEP THREE &nbsp; ✦
+          ✦ &nbsp; {theme === 'voodoo' ? 'THE PETITION' : 'STEP THREE'} &nbsp; ✦
         </div>
         <h2 className="font-oracle text-3xl md:text-4xl gold-text mb-3">
-          Ask Your Question
+          {theme === 'voodoo' ? 'State Your Petition' : 'Ask Your Question'}
         </h2>
         <p className="text-[var(--text-muted)] italic font-body text-lg max-w-md">
-          The more precise your question, the deeper the oracle&apos;s sight.
+          {theme === 'voodoo' 
+            ? 'Speak clearly. The spirits appreciate precision.' 
+            : 'The more precise your question, the deeper the oracle\'s sight.'}
         </p>
       </motion.div>
 
@@ -148,7 +150,7 @@ export default function StepQuestion({ theme, question, onChange, onNext, onBack
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.6 }}
         >
-          ✦ The cards are listening…
+          ✦ {theme === 'voodoo' ? 'The spirits are listening…' : 'The cards are listening…'}
         </motion.p>
       )}
 
@@ -169,7 +171,7 @@ export default function StepQuestion({ theme, question, onChange, onNext, onBack
           style={{ opacity: isValid ? 1 : 0.3, cursor: isValid ? 'pointer' : 'not-allowed' }}
           id="question-continue-btn"
         >
-          Consult the Deck →
+          {theme === 'voodoo' ? 'Cast the Shells →' : 'Consult the Deck →'}
         </button>
       </motion.div>
     </motion.div>

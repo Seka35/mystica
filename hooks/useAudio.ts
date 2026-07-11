@@ -6,7 +6,7 @@
 
 import { useRef, useCallback } from 'react'
 
-type SoundName = 'ambient' | 'shuffle' | 'flip' | 'reveal' | 'chime'
+type SoundName = 'ambient' | 'shuffle' | 'flip' | 'reveal' | 'chime' | 'voodoo_drums' | 'match_strike' | 'glass_clink' | 'cowries_shake' | 'cowries_throw' | 'voodoo_whisper'
 
 interface SoundConfig {
   src: string
@@ -20,6 +20,12 @@ const SOUNDS: Record<SoundName, SoundConfig> = {
   flip: { src: '/sounds/flip.mp3', volume: 0.55, loop: false },
   reveal: { src: '/sounds/reveal.mp3', volume: 0.45, loop: false },
   chime: { src: '/sounds/chime.mp3', volume: 0.4, loop: false },
+  voodoo_drums: { src: '/sounds/voodoo_drums.mp3', volume: 0.4, loop: true },
+  match_strike: { src: '/sounds/match_strike.mp3', volume: 0.6, loop: false },
+  glass_clink: { src: '/sounds/glass_clink.mp3', volume: 0.6, loop: false },
+  cowries_shake: { src: '/sounds/cowries_shake.mp3', volume: 0.7, loop: false },
+  cowries_throw: { src: '/sounds/cowries_throw.mp3', volume: 0.7, loop: false },
+  voodoo_whisper: { src: '/sounds/voodoo_whisper.mp3', volume: 0.5, loop: false },
 }
 
 export function useAudio() {

@@ -8,7 +8,7 @@ import ParticleField from '@/components/ParticleField'
 import { useAudio } from '@/hooks/useAudio'
 import { processStreamedText } from '@/lib/textUtils'
 import { DEFAULT_SPREAD_ID, SPREADS_BY_ID, type Spread, type SpreadId } from '@/lib/spreads'
-import type { DrawnCard, Step, TarotCard, Theme } from '@/lib/types'
+import type { DrawnCard, Step, TarotCard, Theme, Loa, Offering, CowrieCast } from '@/lib/types'
 import type { Gender } from '@/components/steps/StepProfile'
 
 import StepWelcome from '@/components/steps/StepWelcome'
@@ -20,6 +20,10 @@ import StepShuffle from '@/components/steps/StepShuffle'
 import StepFan from '@/components/steps/StepFan'
 import StepDraw from '@/components/steps/StepDraw'
 import StepInterpretation from '@/components/steps/StepInterpretation'
+import StepVoodooLoa from '@/components/steps/StepVoodooLoa'
+import StepVoodooOffering from '@/components/steps/StepVoodooOffering'
+import StepVoodooCast from '@/components/steps/StepVoodooCast'
+import StepVoodooInterpretation from '@/components/steps/StepVoodooInterpretation'
 
 export default function Page() {
   // ── State machine ───────────────────────────────────────────────
@@ -33,6 +37,9 @@ export default function Page() {
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([])
   const [interpretation, setInterpretation] = useState('')
   const [isStreaming, setIsStreaming] = useState(false)
+  const [loa, setLoa] = useState<Loa | null>(null)
+  const [offering, setOffering] = useState<Offering | null>(null)
+  const [cowries, setCowries] = useState<CowrieCast[]>([])
   const streamAbortRef = useRef<AbortController | null>(null)
 
   const spread: Spread = SPREADS_BY_ID[spreadId]
@@ -60,6 +67,9 @@ export default function Page() {
     setAge(null)
     setTheme(null)
     setSpreadId(DEFAULT_SPREAD_ID)
+    setLoa(null)
+    setOffering(null)
+    setCowries([])
     setStep(1)
   }, [audio])
 
@@ -67,11 +77,14 @@ export default function Page() {
   const startStreamingInterpretation = useCallback(async (payload: {
     question: string
     theme: Theme
-    cards: DrawnCard[]
-    spreadId: SpreadId
-    gender: Gender | null
-    age: number | null
-    zodiacSign: string | null
+    cards?: DrawnCard[]
+    spreadId?: SpreadId
+    gender?: Gender | null
+    age?: number | null
+    zodiacSign?: string | null
+    loa?: Loa | null
+    offering?: Offering | null
+    cowries?: CowrieCast[]
   }) => {
     if (!payload.theme) return
     const finalQuestion = payload.theme === 'horoscope' 
@@ -84,10 +97,13 @@ export default function Page() {
       spreadId: payload.spreadId,
       gender: payload.gender,
       age: payload.age,
-      cards: payload.cards.map((d, i) => ({
+      cards: payload.cards ? payload.cards.map((d) => ({
         card: d.card,
         position: d.position,
-      })),
+      })) : undefined,
+      loa: payload.loa,
+      offering: payload.offering,
+      cowries: payload.cowries,
     }
 
     const controller = new AbortController()
@@ -184,6 +200,10 @@ export default function Page() {
     if (t === 'horoscope') {
       setSpreadId('daily')
       scheduleAdvance(5, () => audio.play('chime'))
+    } else if (t === 'voodoo') {
+      audio.stop('ambient')
+      audio.play('voodoo_drums')
+      scheduleAdvance(10, () => audio.play('chime'))
     } else {
       scheduleAdvance(3, () => audio.play('chime'))
     }
@@ -194,8 +214,22 @@ export default function Page() {
     scheduleAdvance(4, () => audio.play('chime'))
   }
 
-  const handleQuestionNext = () => { audio.play('chime'); setStep(5) }
-  const handleQuestionBack = () => { audio.play('chime'); setStep(3) }
+  const handleQuestionNext = () => { 
+    audio.play('chime')
+    if (theme === 'voodoo') {
+      setStep(12) // Go to Voodoo Cast
+    } else {
+      setStep(5)
+    }
+  }
+  const handleQuestionBack = () => { 
+    audio.play('chime')
+    if (theme === 'voodoo') {
+      setStep(11) // Back to Offering
+    } else {
+      setStep(3) 
+    }
+  }
 
   const handleProfileNext = () => { audio.play('chime'); setStep(6) }
   const handleProfileBack = () => { audio.play('chime'); setStep(4) }
@@ -246,6 +280,21 @@ export default function Page() {
     setStep(9)
   }
   const handleNewReading = () => { audio.play('chime'); resetReading() }
+
+  // Voodoo flow handlers
+  const handleVoodooCast = (cast: CowrieCast[]) => {
+    setCowries(cast)
+    setStep(13)
+    if (theme) {
+      void startStreamingInterpretation({
+        question,
+        theme,
+        loa,
+        offering,
+        cowries: cast
+      })
+    }
+  }
 
   // ── Render ───────────────────────────────────────────────────────
   return (
@@ -324,7 +373,7 @@ export default function Page() {
           />
         )}
 
-        {step === 9 && theme && (
+        {step === 9 && theme && theme !== 'voodoo' && (
           <StepInterpretation
             key="s9"
             spread={spread}
@@ -336,6 +385,60 @@ export default function Page() {
             onNewReading={handleNewReading}
           />
         )}
+
+        {/* --- VOODOO FLOW --- */}
+        {step === 10 && (
+          <StepVoodooLoa 
+            key="s10"
+            selected={loa}
+            onSelect={(l) => { 
+              setLoa(l); 
+              scheduleAdvance(11, () => audio.play('voodoo_whisper')) 
+            }}
+            onBack={() => { 
+              audio.play('chime'); 
+              audio.stop('voodoo_drums');
+              audio.play('ambient');
+              setStep(2) 
+            }}
+          />
+        )}
+
+        {step === 11 && (
+          <StepVoodooOffering 
+            key="s11"
+            selected={offering}
+            onSelect={(o) => { 
+              setOffering(o); 
+              const sound = (o === 'rum' || o === 'perfume') ? 'glass_clink' : 'match_strike';
+              scheduleAdvance(4, () => audio.play(sound)) 
+            }}
+            onBack={() => { audio.play('chime'); setStep(10) }}
+          />
+        )}
+
+        {step === 12 && (
+          <StepVoodooCast 
+            key="s12"
+            onNext={handleVoodooCast}
+            audio={audio}
+          />
+        )}
+
+        {step === 13 && theme === 'voodoo' && (
+          <StepVoodooInterpretation 
+            key="s13"
+            loa={loa}
+            offering={offering}
+            cowries={cowries}
+            interpretation={interpretation}
+            isStreaming={isStreaming}
+            theme={theme}
+            question={question}
+            onNewReading={handleNewReading}
+          />
+        )}
+
       </AnimatePresence>
     </main>
   )

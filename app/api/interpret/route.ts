@@ -9,7 +9,7 @@
 
 import { NextRequest } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import type { TarotCard, Theme } from '@/lib/types'
+import type { TarotCard, Theme, Loa, Offering, CowrieCast } from '@/lib/types'
 import { SPREADS_BY_ID, type SpreadId } from '@/lib/spreads'
 
 interface InterpretRequest {
@@ -18,10 +18,13 @@ interface InterpretRequest {
   spreadId: SpreadId | undefined
   gender: 'woman' | 'man' | 'non-binary' | 'not-specified' | null | undefined
   age: number | null | undefined
-  cards: Array<{
+  cards?: Array<{
     card: TarotCard
     position: string
   }>
+  loa?: Loa | null
+  offering?: Offering | null
+  cowries?: CowrieCast[]
 }
 
 // Human-readable strings for the reader profile, used in the user message so
@@ -121,7 +124,7 @@ export async function POST(req: NextRequest) {
         ? body.age
         : null
 
-    if (!question || !theme || !cards || cards.length !== spread.cardCount) {
+    if (theme !== 'voodoo' && (!question || !cards || cards.length !== spread.cardCount)) {
       const cardCount = cards ? cards.length : 0
       const msg =
         'Invalid request: expected ' +
@@ -133,8 +136,12 @@ export async function POST(req: NextRequest) {
       return new Response(msg, { status: 400 })
     }
 
+    if (theme === 'voodoo' && (!question || !body.loa || !body.offering || !body.cowries || body.cowries.length !== 4)) {
+      return new Response('Invalid request: missing voodoo ritual data', { status: 400 })
+    }
+
     // Build the user message (ES5-safe string concat, no template literals)
-    const cardDescriptions = cards
+    const cardDescriptions = cards ? cards
       .map(function (entry, i) {
         const card = entry.card
         const positionDef = spread.positions[i]
@@ -161,7 +168,7 @@ export async function POST(req: NextRequest) {
           meaning
         )
       })
-      .join('\n\n')
+      .join('\n\n') : ''
 
     const themeCap = theme.charAt(0).toUpperCase() + theme.slice(1)
     const plural = spread.cardCount === 1 ? '' : 's'
@@ -178,30 +185,44 @@ export async function POST(req: NextRequest) {
         '\n\n'
       : ''
 
-    const userMessage =
-      profileBlock +
-      'Spread: ' +
-      spread.name +
-      ' (' +
-      spread.cardCount +
-      ' card' +
-      plural +
-      ')\n' +
-      'Target reading length: ' +
-      SPREAD_TARGET_WORDS[spread.id] +
-      '\n\n' +
-      'Theme: ' +
-      themeCap +
-      '\n\n' +
-      'Question: "' +
-      question +
-      '"\n\n' +
-      'The ' +
-      spread.cardCount +
-      ' drawn cards (in position order):\n\n' +
-      cardDescriptions +
-      '\n\n' +
-      'Please deliver the reading now.'
+    let finalUserMessage = ''
+    if (theme === 'voodoo') {
+      const openCount = body.cowries!.filter(c => c === 'open').length
+      finalUserMessage =
+        'VOODOO RITUAL CONTEXT\n' +
+        'You are acting as a Houngan or Mambo. Be extremely mystical, raw, and direct.\n\n' +
+        'Loa Invoked: ' + body.loa + '\n' +
+        'Offering Given: ' + body.offering + '\n' +
+        'Petition: "' + question + '"\n\n' +
+        'Cowrie Shells Cast (4 shells):\n' +
+        body.cowries!.join(', ') + ' (' + openCount + ' open, ' + (4 - openCount) + ' closed)\n\n' +
+        'Interpret the shells based on traditional African/Voodoo cowrie divination (Obi/Ifa style). Provide a brutally honest and intensely personal response without any formatting (no bold/italics).'
+    } else {
+      finalUserMessage =
+        profileBlock +
+        'Spread: ' +
+        spread.name +
+        ' (' +
+        spread.cardCount +
+        ' card' +
+        plural +
+        ')\n' +
+        'Target reading length: ' +
+        SPREAD_TARGET_WORDS[spread.id] +
+        '\n\n' +
+        'Theme: ' +
+        themeCap +
+        '\n\n' +
+        'Question: "' +
+        question +
+        '"\n\n' +
+        'The ' +
+        spread.cardCount +
+        ' drawn cards (in position order):\n\n' +
+        cardDescriptions +
+        '\n\n' +
+        'Please deliver the reading now.'
+    }
 
     const client = new Anthropic({
       apiKey: process.env.MINIMAX_API_KEY || '',
@@ -214,7 +235,7 @@ export async function POST(req: NextRequest) {
       model: 'MiniMax-M2.7',
       max_tokens: maxTokens,
       system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: userMessage }],
+      messages: [{ role: 'user', content: finalUserMessage }],
       stream: true,
     })
 

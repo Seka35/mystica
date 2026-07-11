@@ -1,8 +1,12 @@
 // lib/types.ts
 
-export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free' | 'horoscope' | 'death' | 'sex'
+export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free' | 'horoscope' | 'death' | 'sex' | 'voodoo'
 export type Position = string  // spread-defined (e.g. "Past", "The Obstacle")
-export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 // Added extra steps for voodoo flow
+
+export type Loa = 'legba' | 'erzulie' | 'samedi'
+export type Offering = 'rum' | 'cigar' | 'candle' | 'perfume'
+export type CowrieCast = 'open' | 'closed'
 
 export interface TarotCard {
   id: string
@@ -36,6 +40,10 @@ export interface ReadingState {
   drawnCards: DrawnCard[]
   interpretation: string  // accumulated stream
   isStreaming: boolean
+  // Voodoo specific state
+  loa?: Loa | null
+  offering?: Offering | null
+  cowries?: CowrieCast[]
 }
 
 export const THEME_CONFIG: Record<Theme, { label: string; color: string; accent: string; placeholder: string }> = {
@@ -86,5 +94,11 @@ export const THEME_CONFIG: Record<Theme, { label: string; color: string; accent:
     color: '#6B001A',
     accent: '#FF3366',
     placeholder: 'Ask about desire, passion, intimacy, or connection.',
+  },
+  voodoo: {
+    label: 'Voodoo Ritual',
+    color: '#1a1005', // Very dark brown/wood
+    accent: '#d4af37', // Gold
+    placeholder: 'Petition the spirits...',
   },
 }
