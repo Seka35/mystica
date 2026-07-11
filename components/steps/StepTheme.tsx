@@ -51,77 +51,56 @@ export default function StepTheme({ selected, onSelect }: Props) {
         </p>
       </motion.div>
 
-      {/* Theme grid */}
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3 w-full max-w-3xl mb-10">
+      {/* Theme list */}
+      <div className="flex flex-col gap-3 md:gap-6 w-full max-w-lg mb-10">
         {THEME_ORDER.map((theme, i) => {
           const config = THEME_CONFIG[theme]
           const isSelected = selected === theme
           const icon = THEME_ICONS[theme]
+          const desc = config.placeholder.split('?')[0] + '?'
 
           return (
             <motion.button
               key={theme}
               id={`theme-${theme}`}
-              className={`group text-left relative overflow-hidden rounded-lg aspect-square border ${
-                isSelected 
-                  ? 'border-[rgba(212,175,55,0.8)] shadow-[0_0_20px_rgba(212,175,55,0.15)]' 
-                  : 'border-[rgba(212,175,55,0.1)] hover:border-[rgba(212,175,55,0.4)]'
-              }`}
               onClick={() => onSelect(theme)}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + i * 0.08, duration: 0.6 }}
-              whileHover={{ y: -4 }}
+              className={`relative overflow-hidden rounded-xl border transition-all duration-500 w-full h-28 md:h-36 ${
+                isSelected 
+                  ? 'border-[rgba(212,175,55,0.8)] shadow-[0_0_30px_rgba(212,175,55,0.2)]' 
+                  : 'border-[rgba(212,175,55,0.2)] hover:border-[rgba(212,175,55,0.5)] opacity-80 hover:opacity-100'
+              }`}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 + i * 0.1, duration: 0.6 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              style={{
-                borderColor: isSelected ? config.accent + '80' : undefined,
-                gridColumn: theme === 'free' ? 'span 3 / span 3' : undefined,
-              }}
             >
+              {/* Background Image */}
+              <Image 
+                src={icon}
+                alt={config.label}
+                fill
+                className="object-cover"
+                priority={i < 3}
+              />
+              
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+              
+              {/* Top Accent bar just for a hint of the theme's color */}
               <div
-                className="absolute top-0 left-0 w-full h-1 opacity-80 z-20"
+                className="absolute top-0 left-0 w-full h-1 opacity-80"
                 style={{ background: config.accent }}
               />
 
-              {/* Background Image */}
-              <div className="absolute inset-0 z-0">
-                <Image 
-                  src={icon}
-                  alt={config.label}
-                  fill
-                  className="object-cover opacity-50 group-hover:opacity-80 transition-opacity duration-300"
-                />
-                {/* Gradient overlay to ensure text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-              </div>
-
-              {/* Glow on selected */}
-              {isSelected && (
-                <motion.div
-                  className="absolute inset-0 pointer-events-none z-10"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  style={{
-                    background: `radial-gradient(circle at center, ${config.accent}40, transparent 70%)`,
-                  }}
-                />
-              )}
-
               {/* Content */}
-              <div className="relative z-10 flex flex-col items-center justify-center h-full text-center p-2">
-                <div className="font-oracle text-xs md:text-sm tracking-wider drop-shadow-md mb-1 md:mb-2" style={{ color: config.accent }}>
+              <div className="absolute bottom-0 left-0 w-full p-3 md:p-5 text-left">
+                <div className="font-oracle text-xl md:text-2xl gold-text mb-1 md:mb-2 tracking-wide drop-shadow-lg" style={{ color: isSelected ? config.accent : undefined }}>
                   {config.label}
                 </div>
-                
-                {isSelected && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="text-[var(--text-muted)] italic text-[10px] md:text-xs mt-1 font-body leading-tight bg-black/60 p-1 md:p-1.5 rounded w-full"
-                  >
-                    {config.placeholder.split('?')[0] + '?'}
-                  </motion.div>
-                )}
+                <div className="text-[var(--text-muted)] italic text-xs md:text-sm font-body max-w-[90%] drop-shadow-md">
+                  {desc}
+                </div>
               </div>
             </motion.button>
           )
