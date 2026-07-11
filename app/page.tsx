@@ -25,6 +25,7 @@ import StepVoodooLoa from '@/components/steps/StepVoodooLoa'
 import StepVoodooOffering from '@/components/steps/StepVoodooOffering'
 import StepVoodooCast from '@/components/steps/StepVoodooCast'
 import StepVoodooInterpretation from '@/components/steps/StepVoodooInterpretation'
+import { getAllCards } from '@/lib/tarotData'
 
 export default function Page() {
   // ── State machine ───────────────────────────────────────────────
@@ -230,6 +231,19 @@ export default function Page() {
   const handleQuestionNext = () => { 
     audio.play('chime')
     if (theme === 'voodoo') {
+      // Pre-generate cowries to hide AI latency even more!
+      const cast: CowrieCast[] = Array.from({ length: 4 }).map(() => Math.random() > 0.5 ? 'open' : 'closed')
+      setCowries(cast)
+
+      // Start the stream immediately while user is staring at the "Cast" button
+      void startStreamingInterpretation({
+        question,
+        theme,
+        loa,
+        offering,
+        cowries: cast,
+      })
+
       setStep(13) // Go to Voodoo Cast
     } else {
       setStep(6)
@@ -244,26 +258,26 @@ export default function Page() {
     }
   }
 
-  const handleProfileNext = () => { audio.play('chime'); setStep(7) }
-  const handleProfileBack = () => { audio.play('chime'); setStep(5) }
-
-  const handlePlayShuffle = () => audio.play('shuffle')
-  const handleShuffleNext = () => {
-    audio.stop('shuffle')
+  const handleProfileNext = () => { 
     audio.play('chime')
-    setStep(8)
-  }
+    setStep(7)
 
-  // User drew N cards → advance to Draw step + start streaming
-  const handleDraw = (cards: TarotCard[]) => {
-    audio.play('chime')
-    const drawn: DrawnCard[] = cards.map((card, i) => ({
+    // Pre-draw cards to start AI streaming early (hides latency)
+    const allCards = [...getAllCards()]
+    // Fisher-Yates shuffle
+    for (let i = allCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[allCards[i], allCards[j]] = [allCards[j], allCards[i]]
+    }
+    const selected = allCards.slice(0, spread.cardCount)
+    
+    const drawn: DrawnCard[] = selected.map((card, i) => ({
       card,
       position: spread.positions[i]?.name ?? `position-${i}`,
       isRevealed: false,
     }))
+    
     setDrawnCards(drawn)
-    setStep(9)
 
     if (theme) {
       void startStreamingInterpretation({
@@ -276,6 +290,22 @@ export default function Page() {
         zodiacSign,
       })
     }
+  }
+  
+  const handleProfileBack = () => { audio.play('chime'); setStep(5) }
+
+  const handlePlayShuffle = () => audio.play('shuffle')
+  const handleShuffleNext = () => {
+    audio.stop('shuffle')
+    audio.play('chime')
+    setStep(8)
+  }
+
+  // User finished visually picking N cards in StepFan → advance to Draw step
+  const handleDraw = () => {
+    audio.play('chime')
+    // We already have drawnCards populated from handleProfileNext!
+    setStep(9)
   }
 
   const handleReveal = (i: number) => {
@@ -295,19 +325,6 @@ export default function Page() {
   const handleNewReading = () => { audio.play('chime'); resetReading() }
 
   // Voodoo flow handlers
-  const handleVoodooCastGenerated = (cast: CowrieCast[]) => {
-    setCowries(cast)
-    if (theme) {
-      void startStreamingInterpretation({
-        question,
-        theme,
-        loa,
-        offering,
-        cowries: cast,
-      })
-    }
-  }
-  
   const handleVoodooCastComplete = () => {
     setStep(14)
   }
@@ -381,7 +398,12 @@ export default function Page() {
         )}
 
         {step === 8 && (
-          <StepFan key="s8" spread={spread} onDraw={handleDraw} />
+          <StepFan 
+            key="s8" 
+            spread={spread} 
+            preDrawnCards={drawnCards.map(d => d.card)}
+            onDraw={handleDraw} 
+          />
         )}
 
         {step === 9 && theme && (
@@ -444,7 +466,7 @@ export default function Page() {
         {step === 13 && (
           <StepVoodooCast 
             key="s13"
-            onCastGenerated={handleVoodooCastGenerated}
+            preDrawnCowries={cowries}
             onNext={handleVoodooCastComplete}
             audio={audio}
           />

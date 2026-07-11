@@ -5,14 +5,14 @@ import { useState, useRef, useEffect } from 'react'
 import type { CowrieCast } from '@/lib/types'
 
 interface Props {
-  onCastGenerated: (cast: CowrieCast[]) => void
+  preDrawnCowries: CowrieCast[]
   onNext: () => void
   audio: { play: (name: any) => void; stop: (name: any) => void }
 }
 
 const COWRIES_COUNT = 4
 
-export default function StepVoodooCast({ onCastGenerated, onNext, audio }: Props) {
+export default function StepVoodooCast({ preDrawnCowries, onNext, audio }: Props) {
   const [hasCast, setHasCast] = useState(false)
   const [isShaking, setIsShaking] = useState(false)
   const [castResult, setCastResult] = useState<CowrieCast[]>([])
@@ -22,10 +22,6 @@ export default function StepVoodooCast({ onCastGenerated, onNext, audio }: Props
     if (hasCast || isShaking) return
     setIsShaking(true)
     audio.play('cowries_shake')
-    // Generate random casts immediately so we can start fetching interpretation
-    const result: CowrieCast[] = Array.from({ length: COWRIES_COUNT }).map(() => 
-      Math.random() > 0.5 ? 'open' : 'closed'
-    )
     
     // Generate random drop positions
     const pos = Array.from({ length: COWRIES_COUNT }).map(() => ({
@@ -34,11 +30,8 @@ export default function StepVoodooCast({ onCastGenerated, onNext, audio }: Props
       rot: Math.random() * 360,
     }))
     
-    setCastResult(result)
+    setCastResult(preDrawnCowries)
     setPositions(pos)
-    
-    // Trigger API call immediately in background
-    onCastGenerated(result)
 
     // Simulate shaking time before throwing
     setTimeout(() => {

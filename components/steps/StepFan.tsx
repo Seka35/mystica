@@ -14,6 +14,7 @@ import type { Spread } from '@/lib/spreads'
 
 interface Props {
   spread: Spread
+  preDrawnCards: TarotCard[]
   onDraw: (cards: TarotCard[]) => void
 }
 
@@ -57,8 +58,9 @@ const CROSS_5 = [
   { top: '100%',   left: '50%', transform: 'translate(-50%, -100%)' },    // 3 bottom
 ]
 
-export default function StepFan({ spread, onDraw }: Props) {
+export default function StepFan({ spread, preDrawnCards, onDraw }: Props) {
   const [picked, setPicked] = useState<TarotCard[]>([])
+  const [pickedFanIds, setPickedFanIds] = useState<Set<string>>(new Set())
   const [hoveredId, setHoveredId] = useState<string | null>(null)
   const [countdown, setCountdown] = useState<number | null>(null)
   const [flight, setFlight] = useState<FlightData | null>(null)
@@ -91,19 +93,18 @@ export default function StepFan({ spread, onDraw }: Props) {
     })
   }, [cards, VISIBLE, ARC])
 
-  const pickedIds = new Set(picked.map((c) => c.id))
   const isComplete = picked.length === spread.cardCount
   const remaining = spread.cardCount - picked.length
 
-  function launchFlight(card: TarotCard, fanEl: HTMLButtonElement, slotIdx: number) {
+  function launchFlight(fanCardId: string, fanEl: HTMLButtonElement, slotIdx: number) {
     const slotEl = slotRefs.current[slotIdx]
     if (!slotEl) return
     const fanRect  = fanEl.getBoundingClientRect()
     const slotRect = slotEl.getBoundingClientRect()
-    const fanIdx   = layout.findIndex((l) => l.card.id === card.id)
+    const fanIdx   = layout.findIndex((l) => l.card.id === fanCardId)
 
     setFlight({
-      card,
+      card: layout[fanIdx].card, // Used just for animation
       fromX: fanRect.left,
       fromY: fanRect.top,
       fromW: fanRect.width,
@@ -119,23 +120,25 @@ export default function StepFan({ spread, onDraw }: Props) {
 
   function handlePick(card: TarotCard) {
     if (isComplete) return
-    if (pickedIds.has(card.id)) return
+    if (pickedFanIds.has(card.id)) return
     if (flight) return
     const fanEl = fanRefs.current[card.id]
     const slotIdx = picked.length
     if (!fanEl) return
-    launchFlight(card, fanEl, slotIdx)
+    
+    setPickedFanIds(prev => new Set(prev).add(card.id))
+    launchFlight(card.id, fanEl, slotIdx)
   }
 
   function onFlightComplete() {
     if (!flight) return
-    const arrived = flight.card
     const arrivedSlot = flight.slotIdx
+    const actualCard = preDrawnCards[arrivedSlot] // Assign pre-drawn card!
     setFlight(null)
     setPicked((prev) => {
       if (prev.length >= arrivedSlot + 1) return prev
       const next = [...prev]
-      next[arrivedSlot] = arrived
+      next[arrivedSlot] = actualCard
       return next
     })
 
@@ -235,7 +238,7 @@ export default function StepFan({ spread, onDraw }: Props) {
 
         {layout.map(({ card, displayIdx, angle, baseX, z }) => {
           const isHovered = hoveredId === card.id && !isComplete && !flight
-          const isPicked  = pickedIds.has(card.id)
+          const isPicked  = pickedFanIds.has(card.id)
           const isFlying  = flight?.card.id === card.id
           if (isPicked || isFlying) return null
 
