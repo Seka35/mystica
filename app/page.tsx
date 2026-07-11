@@ -49,9 +49,10 @@ export default function Page() {
   // ── Audio ────────────────────────────────────────────────────────
   const audio = useAudio()
 
-  // Lock scroll per-step; allow scroll inside fan (7), draw (8) and interpretation (9)
+  // Lock scroll per-step; allow scroll on selection menus (2, 3) and during fan (8), draw (9) and interpretation (10)
   useEffect(() => {
-    document.body.style.overflow = (step >= 7) ? 'auto' : 'hidden'
+    const canScroll = step === 2 || step === 3 || step >= 8
+    document.body.style.overflow = canScroll ? 'auto' : 'hidden'
     return () => { document.body.style.overflow = '' }
   }, [step])
 

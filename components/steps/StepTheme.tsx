@@ -52,7 +52,7 @@ export default function StepTheme({ selected, onSelect }: Props) {
       </motion.div>
 
       {/* Theme grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 w-full max-w-2xl mb-10">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3 w-full max-w-3xl mb-10">
         {THEME_ORDER.map((theme, i) => {
           const config = THEME_CONFIG[theme]
           const isSelected = selected === theme
@@ -75,7 +75,7 @@ export default function StepTheme({ selected, onSelect }: Props) {
               whileTap={{ scale: 0.98 }}
               style={{
                 borderColor: isSelected ? config.accent + '80' : undefined,
-                gridColumn: theme === 'free' ? 'span 2 / span 2' : undefined,
+                gridColumn: theme === 'free' ? 'span 3 / span 3' : undefined,
               }}
             >
               <div
@@ -108,8 +108,8 @@ export default function StepTheme({ selected, onSelect }: Props) {
               )}
 
               {/* Content */}
-              <div className="relative z-10 flex flex-col items-center justify-center h-full text-center p-3">
-                <div className="font-oracle text-sm md:text-base tracking-wider drop-shadow-md mb-2" style={{ color: config.accent }}>
+              <div className="relative z-10 flex flex-col items-center justify-center h-full text-center p-2">
+                <div className="font-oracle text-xs md:text-sm tracking-wider drop-shadow-md mb-1 md:mb-2" style={{ color: config.accent }}>
                   {config.label}
                 </div>
                 
@@ -117,7 +117,7 @@ export default function StepTheme({ selected, onSelect }: Props) {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
-                    className="text-[var(--text-muted)] italic text-xs mt-1 font-body leading-tight bg-black/60 p-1.5 rounded"
+                    className="text-[var(--text-muted)] italic text-[10px] md:text-xs mt-1 font-body leading-tight bg-black/60 p-1 md:p-1.5 rounded w-full"
                   >
                     {config.placeholder.split('?')[0] + '?'}
                   </motion.div>

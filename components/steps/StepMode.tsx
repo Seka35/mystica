@@ -56,14 +56,14 @@ export default function StepMode({ selected, onSelect }: Props) {
       </motion.div>
 
       {/* Mode list */}
-      <div className="flex flex-col gap-6 w-full max-w-lg mb-10">
+      <div className="flex flex-col gap-3 md:gap-6 w-full max-w-lg mb-10">
         {MODES.map((mode, i) => {
           const isSelected = selected === mode.id
           return (
             <motion.button
               key={mode.id}
               onClick={() => onSelect(mode.id)}
-              className={`relative overflow-hidden rounded-xl border transition-all duration-500 w-full aspect-video ${
+              className={`relative overflow-hidden rounded-xl border transition-all duration-500 w-full h-28 md:h-36 ${
                 isSelected 
                   ? 'border-[rgba(212,175,55,0.8)] shadow-[0_0_30px_rgba(212,175,55,0.2)]' 
                   : 'border-[rgba(212,175,55,0.2)] hover:border-[rgba(212,175,55,0.5)] opacity-80 hover:opacity-100'
@@ -86,11 +86,11 @@ export default function StepMode({ selected, onSelect }: Props) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
               
               {/* Content */}
-              <div className="absolute bottom-0 left-0 w-full p-5 text-left">
-                <div className="font-oracle text-2xl gold-text mb-2 tracking-wide drop-shadow-lg">
+              <div className="absolute bottom-0 left-0 w-full p-3 md:p-5 text-left">
+                <div className="font-oracle text-xl md:text-2xl gold-text mb-1 md:mb-2 tracking-wide drop-shadow-lg">
                   {mode.label}
                 </div>
-                <div className="text-[var(--text-muted)] italic text-sm font-body max-w-[85%] drop-shadow-md">
+                <div className="text-[var(--text-muted)] italic text-xs md:text-sm font-body max-w-[90%] drop-shadow-md">
                   {mode.desc}
                 </div>
               </div>
