@@ -9,11 +9,12 @@ interface Props {
   onBack: () => void
 }
 
-const LOAS: Array<{ id: Loa; name: string; title: string; image: string; color: string }> = [
+const LOAS: Array<{ id: Loa; name: string; title: string; desc: string; image: string; color: string }> = [
   {
     id: 'legba',
     name: 'Papa Legba',
     title: 'The Gatekeeper',
+    desc: 'Opens the gates and enables spiritual communication.',
     image: '/images/voodoo/loa_legba.png',
     color: '#D4AF37',
   },
@@ -21,6 +22,7 @@ const LOAS: Array<{ id: Loa; name: string; title: string; image: string; color: 
     id: 'erzulie',
     name: 'Erzulie Dantor',
     title: 'Fierce Love & Protection',
+    desc: 'Invoke her for intense love, passion, and fierce protection.',
     image: '/images/voodoo/loa_erzulie.png',
     color: '#FF3366',
   },
@@ -28,6 +30,7 @@ const LOAS: Array<{ id: Loa; name: string; title: string; image: string; color: 
     id: 'samedi',
     name: 'Baron Samedi',
     title: 'Death & Transitions',
+    desc: 'Master of the dead, invoked for dark magic and transformation.',
     image: '/images/voodoo/loa_samedi.png',
     color: '#8C8C8C',
   },
@@ -61,7 +64,7 @@ export default function StepVoodooLoa({ selected, onSelect, onBack }: Props) {
       </motion.div>
 
       {/* Loa Selection */}
-      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
+      <div className="w-full max-w-5xl grid grid-cols-3 gap-2 md:gap-8 mb-12">
         {LOAS.map((loa, i) => {
           const isSelected = selected === loa.id
           return (
@@ -76,7 +79,7 @@ export default function StepVoodooLoa({ selected, onSelect, onBack }: Props) {
               whileTap={{ scale: 0.95 }}
             >
               <div 
-                className={`relative w-48 h-48 md:w-56 md:h-56 rounded-lg overflow-hidden transition-all duration-500`}
+                className={`relative w-full aspect-square rounded-lg overflow-hidden transition-all duration-500`}
                 style={{
                   boxShadow: isSelected ? `0 0 40px ${loa.color}60` : `0 0 20px rgba(0,0,0,0.8)`,
                   border: isSelected ? `2px solid ${loa.color}` : '1px solid rgba(255,255,255,0.1)',
@@ -95,12 +98,15 @@ export default function StepVoodooLoa({ selected, onSelect, onBack }: Props) {
                   style={{ background: `radial-gradient(circle at center, ${loa.color} 0%, transparent 70%)` }}
                 />
               </div>
-              <div className="text-center">
-                <div className="font-oracle text-xl tracking-wider mb-1" style={{ color: isSelected ? loa.color : '#e5e7eb' }}>
+              <div className="text-center mt-2 flex-1 flex flex-col">
+                <div className="font-oracle text-sm md:text-xl tracking-wider mb-1" style={{ color: isSelected ? loa.color : '#e5e7eb' }}>
                   {loa.name}
                 </div>
-                <div className="text-[var(--text-muted)] text-xs italic font-body opacity-80">
+                <div className="text-[var(--text-muted)] text-[10px] md:text-xs italic font-body opacity-80 mb-2">
                   {loa.title}
+                </div>
+                <div className="text-[var(--text-muted)] text-[10px] md:text-sm font-body opacity-60 px-1">
+                  {loa.desc}
                 </div>
               </div>
             </motion.button>
