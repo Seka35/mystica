@@ -1,8 +1,9 @@
 // lib/types.ts
 
+export type Mode = 'tarot' | 'horoscope' | 'voodoo'
 export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free' | 'horoscope' | 'death' | 'sex' | 'voodoo'
 export type Position = string  // spread-defined (e.g. "Past", "The Obstacle")
-export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 // Added extra steps for voodoo flow
+export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14
 
 export type Loa = 'legba' | 'erzulie' | 'samedi'
 export type Offering = 'rum' | 'cigar' | 'candle' | 'perfume'
@@ -34,6 +35,7 @@ export interface DrawnCard {
 
 export interface ReadingState {
   step: Step
+  mode: Mode | null
   theme: Theme | null
   question: string
   cutIndex: number        // 0–77, seed for draw

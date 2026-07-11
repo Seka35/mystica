@@ -8,10 +8,11 @@ import ParticleField from '@/components/ParticleField'
 import { useAudio } from '@/hooks/useAudio'
 import { processStreamedText } from '@/lib/textUtils'
 import { DEFAULT_SPREAD_ID, SPREADS_BY_ID, type Spread, type SpreadId } from '@/lib/spreads'
-import type { DrawnCard, Step, TarotCard, Theme, Loa, Offering, CowrieCast } from '@/lib/types'
+import type { DrawnCard, Step, TarotCard, Theme, Mode, Loa, Offering, CowrieCast } from '@/lib/types'
 import type { Gender } from '@/components/steps/StepProfile'
 
 import StepWelcome from '@/components/steps/StepWelcome'
+import StepMode from '@/components/steps/StepMode'
 import StepTheme from '@/components/steps/StepTheme'
 import StepSpread from '@/components/steps/StepSpread'
 import StepQuestion from '@/components/steps/StepQuestion'
@@ -28,6 +29,7 @@ import StepVoodooInterpretation from '@/components/steps/StepVoodooInterpretatio
 export default function Page() {
   // ── State machine ───────────────────────────────────────────────
   const [step, setStep] = useState<Step>(1)
+  const [mode, setMode] = useState<Mode | null>(null)
   const [theme, setTheme] = useState<Theme | null>(null)
   const [spreadId, setSpreadId] = useState<SpreadId>(DEFAULT_SPREAD_ID)
   const [question, setQuestion] = useState('')
@@ -67,6 +69,7 @@ export default function Page() {
     setZodiacSign(null)
     setAge(null)
     setTheme(null)
+    setMode(null)
     setSpreadId(DEFAULT_SPREAD_ID)
     setLoa(null)
     setOffering(null)
@@ -196,50 +199,58 @@ export default function Page() {
     }, 450)
   }
 
-  const handleThemeSelect = (t: Theme) => {
-    setTheme(t)
-    if (t === 'horoscope') {
+  const handleModeSelect = (m: Mode) => {
+    setMode(m)
+    if (m === 'horoscope') {
+      setTheme('horoscope')
       setSpreadId('daily')
-      scheduleAdvance(5, () => audio.play('chime'))
-    } else if (t === 'voodoo') {
+      scheduleAdvance(6, () => audio.play('chime'))
+    } else if (m === 'voodoo') {
+      setTheme('voodoo')
       audio.stop('ambient')
       audio.play('voodoo_drums')
-      scheduleAdvance(10, () => audio.play('chime'))
+      scheduleAdvance(11, () => audio.play('chime'))
     } else {
+      // Tarot
       scheduleAdvance(3, () => audio.play('chime'))
     }
   }
 
+  const handleThemeSelect = (t: Theme) => {
+    setTheme(t)
+    scheduleAdvance(4, () => audio.play('chime'))
+  }
+
   const handleSpreadSelect = (id: SpreadId) => {
     setSpreadId(id)
-    scheduleAdvance(4, () => audio.play('chime'))
+    scheduleAdvance(5, () => audio.play('chime'))
   }
 
   const handleQuestionNext = () => { 
     audio.play('chime')
     if (theme === 'voodoo') {
-      setStep(12) // Go to Voodoo Cast
+      setStep(13) // Go to Voodoo Cast
     } else {
-      setStep(5)
+      setStep(6)
     }
   }
   const handleQuestionBack = () => { 
     audio.play('chime')
     if (theme === 'voodoo') {
-      setStep(11) // Back to Offering
+      setStep(12) // Back to Offering
     } else {
-      setStep(3) 
+      setStep(4) 
     }
   }
 
-  const handleProfileNext = () => { audio.play('chime'); setStep(6) }
-  const handleProfileBack = () => { audio.play('chime'); setStep(4) }
+  const handleProfileNext = () => { audio.play('chime'); setStep(7) }
+  const handleProfileBack = () => { audio.play('chime'); setStep(5) }
 
   const handlePlayShuffle = () => audio.play('shuffle')
   const handleShuffleNext = () => {
     audio.stop('shuffle')
     audio.play('chime')
-    setStep(7)
+    setStep(8)
   }
 
   // User drew N cards → advance to Draw step + start streaming
@@ -251,7 +262,7 @@ export default function Page() {
       isRevealed: false,
     }))
     setDrawnCards(drawn)
-    setStep(8)
+    setStep(9)
 
     if (theme) {
       void startStreamingInterpretation({
@@ -278,14 +289,14 @@ export default function Page() {
 
   const handleSeeInterpretation = () => {
     audio.play('chime')
-    setStep(9)
+    setStep(10)
   }
   const handleNewReading = () => { audio.play('chime'); resetReading() }
 
   // Voodoo flow handlers
   const handleVoodooCast = (cast: CowrieCast[]) => {
     setCowries(cast)
-    setStep(13)
+    setStep(14)
     if (theme) {
       void startStreamingInterpretation({
         question,
@@ -309,25 +320,33 @@ export default function Page() {
         )}
 
         {step === 2 && (
-          <StepTheme
+          <StepMode
             key="s2"
+            selected={mode}
+            onSelect={handleModeSelect}
+          />
+        )}
+
+        {step === 3 && mode === 'tarot' && (
+          <StepTheme
+            key="s3"
             selected={theme}
             onSelect={handleThemeSelect}
           />
         )}
 
-        {step === 3 && theme && (
+        {step === 4 && theme && mode === 'tarot' && (
           <StepSpread
-            key="s3"
+            key="s4"
             theme={theme}
             selected={spreadId}
             onSelect={handleSpreadSelect}
           />
         )}
 
-        {step === 4 && theme && (
+        {step === 5 && theme && (
           <StepQuestion
-            key="s4"
+            key="s5"
             theme={theme}
             question={question}
             onChange={setQuestion}
@@ -336,34 +355,34 @@ export default function Page() {
           />
         )}
 
-        {step === 5 && theme && (
+        {step === 6 && theme && (
           <StepProfile
-            key="s5"
+            key="s6"
             theme={theme}
             gender={gender}
             zodiacSign={zodiacSign}
             onChangeGender={setGender}
             onChangeZodiac={setZodiacSign}
             onNext={handleProfileNext}
-            onBack={theme === 'horoscope' ? () => { audio.play('chime'); setStep(2) } : handleProfileBack}
+            onBack={mode === 'horoscope' ? () => { audio.play('chime'); setStep(2) } : handleProfileBack}
           />
         )}
 
-        {step === 6 && (
+        {step === 7 && (
           <StepShuffle
-            key="s6"
+            key="s7"
             onNext={handleShuffleNext}
             onPlayShuffle={handlePlayShuffle}
           />
         )}
 
-        {step === 7 && (
-          <StepFan key="s7" spread={spread} onDraw={handleDraw} />
+        {step === 8 && (
+          <StepFan key="s8" spread={spread} onDraw={handleDraw} />
         )}
 
-        {step === 8 && theme && (
+        {step === 9 && theme && (
           <StepDraw
-            key="s8"
+            key="s9"
             spread={spread}
             drawnCards={drawnCards}
             onReveal={handleReveal}
@@ -374,9 +393,9 @@ export default function Page() {
           />
         )}
 
-        {step === 9 && theme && theme !== 'voodoo' && (
+        {step === 10 && theme && theme !== 'voodoo' && (
           <StepInterpretation
-            key="s9"
+            key="s10"
             spread={spread}
             drawnCards={drawnCards}
             interpretation={interpretation}
@@ -388,13 +407,13 @@ export default function Page() {
         )}
 
         {/* --- VOODOO FLOW --- */}
-        {step === 10 && (
+        {step === 11 && (
           <StepVoodooLoa 
-            key="s10"
+            key="s11"
             selected={loa}
             onSelect={(l) => { 
               setLoa(l); 
-              scheduleAdvance(11, () => audio.play('voodoo_whisper')) 
+              scheduleAdvance(12, () => audio.play('voodoo_whisper')) 
             }}
             onBack={() => { 
               audio.play('chime'); 
@@ -405,30 +424,30 @@ export default function Page() {
           />
         )}
 
-        {step === 11 && (
+        {step === 12 && (
           <StepVoodooOffering 
-            key="s11"
+            key="s12"
             selected={offering}
             onSelect={(o) => { 
               setOffering(o); 
               const sound = (o === 'rum' || o === 'perfume') ? 'glass_clink' : 'match_strike';
-              scheduleAdvance(4, () => audio.play(sound)) 
+              scheduleAdvance(5, () => audio.play(sound)) 
             }}
-            onBack={() => { audio.play('chime'); setStep(10) }}
+            onBack={() => { audio.play('chime'); setStep(11) }}
           />
         )}
 
-        {step === 12 && (
+        {step === 13 && (
           <StepVoodooCast 
-            key="s12"
+            key="s13"
             onNext={handleVoodooCast}
             audio={audio}
           />
         )}
 
-        {step === 13 && theme === 'voodoo' && (
+        {step === 14 && theme === 'voodoo' && (
           <StepVoodooInterpretation 
-            key="s13"
+            key="s14"
             loa={loa}
             offering={offering}
             cowries={cowries}
