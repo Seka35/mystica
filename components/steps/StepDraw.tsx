@@ -90,14 +90,19 @@ export default function StepDraw({
 
       {spread.cardCount === 5 && (
         isMobile ? (
-          // Mobile: vertical stack in reading order 1→2→3→4→5
-          <div className="flex flex-col gap-4 mb-8 items-center">
-            {drawnCards.map((d, i) => (
-              <CardColumn key={d.position} drawn={d} index={i}
-                color={PALETTE[i]} question={question}
-                onReveal={onReveal} onFlipSound={onFlipSound}
-                compact />
-            ))}
+          // Mobile: 2-1-2 grid
+          <div className="flex flex-col gap-0 md:gap-2 mb-8 items-center w-full max-w-sm mx-auto">
+            <div className="flex justify-center gap-2">
+              <CardColumn drawn={drawnCards[0]} index={0} color={PALETTE[0]} question={question} onReveal={onReveal} onFlipSound={onFlipSound} compact />
+              <CardColumn drawn={drawnCards[1]} index={1} color={PALETTE[1]} question={question} onReveal={onReveal} onFlipSound={onFlipSound} compact />
+            </div>
+            <div className="flex justify-center">
+              <CardColumn drawn={drawnCards[2]} index={2} color={PALETTE[2]} question={question} onReveal={onReveal} onFlipSound={onFlipSound} compact />
+            </div>
+            <div className="flex justify-center gap-2">
+              <CardColumn drawn={drawnCards[3]} index={3} color={PALETTE[3]} question={question} onReveal={onReveal} onFlipSound={onFlipSound} compact />
+              <CardColumn drawn={drawnCards[4]} index={4} color={PALETTE[4]} question={question} onReveal={onReveal} onFlipSound={onFlipSound} compact />
+            </div>
           </div>
         ) : (
           // Desktop: clean 2+3 grid, no overlap, reading order 1→2→3→4→5
@@ -205,8 +210,8 @@ function CardFace({ drawn, index, color, question, onReveal, onFlipSound, compac
   return (
     <motion.div
       className="card-3d-wrapper cursor-pointer touch-manipulation"
-      style={compact ? { transform: 'scale(0.65)', transformOrigin: 'center' } : undefined}
-      whileTap={isRevealed ? undefined : { scale: compact ? 0.6 : 0.94 }}
+      style={compact ? { transform: 'scale(0.85)', transformOrigin: 'center' } : undefined}
+      whileTap={isRevealed ? undefined : { scale: compact ? 0.8 : 0.94 }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
       onClick={() => {
         if (!isRevealed) { onFlipSound(); onReveal(index) }

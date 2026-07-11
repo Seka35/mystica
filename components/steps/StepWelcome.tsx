@@ -89,8 +89,9 @@ export default function StepWelcome({ onBegin }: Props) {
         ))}
 
         {/* Front card — breathing animation */}
-        <motion.div
-          className="relative z-10"
+        <motion.button
+          onClick={onBegin}
+          className="relative z-10 block w-full touch-manipulation cursor-pointer"
           animate={{
             scale: [1, 1.025, 1],
             y: [0, -6, 0],
@@ -100,6 +101,7 @@ export default function StepWelcome({ onBegin }: Props) {
             repeat: Infinity,
             ease: 'easeInOut',
           }}
+          aria-label="Begin your tarot reading"
         >
           <div className="w-[170px] h-[298px] rounded-lg overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_30px_rgba(240,192,64,0.15)] border border-[rgba(240,192,64,0.25)]">
             <Image
@@ -115,7 +117,7 @@ export default function StepWelcome({ onBegin }: Props) {
           <div className="absolute inset-0 rounded-lg animate-pulse"
             style={{ boxShadow: '0 0 40px rgba(240,192,64,0.12)', pointerEvents: 'none' }}
           />
-        </motion.div>
+        </motion.button>
       </motion.div>
 
       {/* CTA */}
@@ -125,16 +127,8 @@ export default function StepWelcome({ onBegin }: Props) {
         transition={{ delay: 1.4, duration: 0.8 }}
         className="flex flex-col items-center gap-4"
       >
-        <button
-          id="begin-reading-btn"
-          className="btn-oracle text-sm"
-          onClick={onBegin}
-          aria-label="Begin your tarot reading"
-        >
-          ✦ &nbsp; Begin the Reading &nbsp; ✦
-        </button>
-        <p className="text-[var(--text-muted)] text-sm italic font-body opacity-50">
-          A personal journey through the cards awaits
+        <p className="text-[var(--text-muted)] text-sm italic font-body opacity-80 mt-4 animate-pulse">
+          ✦ Tap the deck to begin ✦
         </p>
       </motion.div>
 

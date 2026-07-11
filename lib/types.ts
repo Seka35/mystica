@@ -1,6 +1,6 @@
 // lib/types.ts
 
-export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free'
+export type Theme = 'love' | 'work' | 'money' | 'spiritual' | 'free' | 'horoscope'
 export type Position = string  // spread-defined (e.g. "Past", "The Obstacle")
 export type Step = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
@@ -68,5 +68,11 @@ export const THEME_CONFIG: Record<Theme, { label: string; color: string; accent:
     color: '#1A5A5A',
     accent: '#4DFFE0',
     placeholder: 'Ask the universe anything. Be specific, precision opens the oracle.',
+  },
+  horoscope: {
+    label: 'Daily Horoscope',
+    color: '#2A1A6B',
+    accent: '#9D4DFF',
+    placeholder: 'Discover the energies surrounding your zodiac sign today.',
   },
 }

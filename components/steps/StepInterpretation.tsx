@@ -187,6 +187,49 @@ export default function StepInterpretation({
                 ✦ &nbsp; New Reading
               </button>
             </div>
+
+            {/* Share Buttons */}
+            <div className="mt-10 flex flex-col items-center">
+              <div className="text-[var(--text-muted)] font-oracle text-xs tracking-[0.2em] mb-4 opacity-60">
+                SHARE YOUR DESTINY
+              </div>
+              <div className="flex flex-wrap gap-3 justify-center max-w-sm">
+                <button 
+                  onClick={() => window.open('https://facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')}
+                  className="btn-ghost !px-4 !py-2 !rounded-full text-xs" 
+                  aria-label="Share on Facebook"
+                >
+                  Facebook
+                </button>
+                <button 
+                  onClick={() => window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('I just consulted the Oracle... Discover your destiny too! ✦') + '&url=' + encodeURIComponent(window.location.href), '_blank')}
+                  className="btn-ghost !px-4 !py-2 !rounded-full text-xs" 
+                  aria-label="Share on Twitter"
+                >
+                  Twitter
+                </button>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied! You can now share it on Instagram.');
+                  }}
+                  className="btn-ghost !px-4 !py-2 !rounded-full text-xs" 
+                  aria-label="Share on Instagram"
+                >
+                  Instagram
+                </button>
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied! You can now share it on TikTok.');
+                  }}
+                  className="btn-ghost !px-4 !py-2 !rounded-full text-xs" 
+                  aria-label="Share on TikTok"
+                >
+                  TikTok
+                </button>
+              </div>
+            </div>
           </motion.div>
         )}
       </div>

@@ -1,10 +1,8 @@
 'use client'
-// components/steps/StepProfile.tsx — Step 5: About You (optional profile)
-// Helps personalize the reading by telling the Oracle your gender and age.
-// Both fields are OPTIONAL — the user can skip the step entirely.
+// components/steps/StepProfile.tsx — Step 5: About You (optional profile) / Zodiac for Horoscope
 
 import { motion } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import type { Theme } from '@/lib/types'
 import { THEME_CONFIG } from '@/lib/types'
 
@@ -13,9 +11,9 @@ export type Gender = 'woman' | 'man' | 'non-binary' | 'not-specified'
 interface Props {
   theme: Theme
   gender: Gender | null
-  age: number | null
+  zodiacSign: string | null
   onChangeGender: (g: Gender | null) => void
-  onChangeAge: (a: number | null) => void
+  onChangeZodiac: (z: string | null) => void
   onNext: () => void
   onBack: () => void
 }
@@ -27,48 +25,40 @@ const GENDERS: Array<{ value: Gender; label: string; symbol: string }> = [
   { value: 'not-specified', label: 'Rather not say', symbol: '·' },
 ]
 
-const MIN_AGE = 13
-const MAX_AGE = 120
+const ZODIACS = [
+  { value: 'aries', label: 'Aries', symbol: '♈' },
+  { value: 'taurus', label: 'Taurus', symbol: '♉' },
+  { value: 'gemini', label: 'Gemini', symbol: '♊' },
+  { value: 'cancer', label: 'Cancer', symbol: '♋' },
+  { value: 'leo', label: 'Leo', symbol: '♌' },
+  { value: 'virgo', label: 'Virgo', symbol: '♍' },
+  { value: 'libra', label: 'Libra', symbol: '♎' },
+  { value: 'scorpio', label: 'Scorpio', symbol: '♏' },
+  { value: 'sagittarius', label: 'Sagittarius', symbol: '♐' },
+  { value: 'capricorn', label: 'Capricorn', symbol: '♑' },
+  { value: 'aquarius', label: 'Aquarius', symbol: '♒' },
+  { value: 'pisces', label: 'Pisces', symbol: '♓' },
+]
+
 const ADVANCE_DELAY_MS = 900
 
 export default function StepProfile({
   theme,
   gender,
-  age,
+  zodiacSign,
   onChangeGender,
-  onChangeAge,
+  onChangeZodiac,
   onNext,
   onBack,
 }: Props) {
   const accent = THEME_CONFIG[theme].accent
-  const [ageText, setAgeText] = useState(age == null ? '' : String(age))
-
-  // Auto-advance debouncer — every "commit" gesture (gender click, age
-  // blur, age Enter) resets the timer, so quick edits don't trigger
-  // spurious advances.
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   const scheduleAdvance = () => {
     if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
     advanceTimerRef.current = setTimeout(() => {
       onNext()
     }, ADVANCE_DELAY_MS)
-  }
-
-  const nothingFilled = gender == null && age == null
-
-  function commitAge(raw: string, advanceAfter: boolean) {
-    setAgeText(raw)
-    if (raw.trim() === '') {
-      onChangeAge(null)
-      return
-    }
-    const n = parseInt(raw, 10)
-    if (Number.isFinite(n) && n >= MIN_AGE && n <= MAX_AGE) {
-      onChangeAge(n)
-      if (advanceAfter) scheduleAdvance()
-    } else {
-      onChangeAge(null)
-    }
   }
 
   function pickGender(g: Gender) {
@@ -77,12 +67,19 @@ export default function StepProfile({
     if (newVal) scheduleAdvance()
   }
 
-  // Cleanup pending auto-advance timer on unmount
+  function pickZodiac(z: string) {
+    const newVal = zodiacSign === z ? null : z
+    onChangeZodiac(newVal)
+    if (newVal) scheduleAdvance()
+  }
+
   useEffect(() => {
     return () => {
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
     }
   }, [])
+
+  const isHoroscope = theme === 'horoscope'
 
   return (
     <motion.div
@@ -100,19 +97,19 @@ export default function StepProfile({
         className="text-center mb-8"
       >
         <div className="text-[var(--text-muted)] font-oracle text-xs tracking-[0.4em] mb-4 opacity-60">
-          ✦ &nbsp; STEP FOUR &nbsp; ✦
+          ✦ &nbsp; {isHoroscope ? 'YOUR SIGN' : 'STEP FOUR'} &nbsp; ✦
         </div>
         <h2 className="font-oracle text-3xl md:text-4xl gold-text mb-2">
-          About You
+          {isHoroscope ? 'Your Zodiac Sign' : 'About You'}
         </h2>
         <p className="text-[var(--text-muted)] italic font-body text-lg max-w-md">
-          A small detail helps the Oracle address you in your own voice.
-          {' '}
-          <span className="opacity-70 text-sm">(entirely optional)</span>
+          {isHoroscope 
+            ? 'Select your sign to draw your daily prediction.' 
+            : 'A small detail helps the Oracle address you in your own voice.'}
         </p>
       </motion.div>
 
-      {/* Gender */}
+      {/* Grid Selection */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -120,87 +117,69 @@ export default function StepProfile({
         className="w-full max-w-lg mb-8"
       >
         <div className="text-[var(--text-muted)] font-oracle text-xs tracking-[0.3em] mb-3 text-center opacity-80">
-          HOW DO YOU IDENTIFY
+          {isHoroscope ? 'CHOOSE YOUR SIGN' : 'HOW DO YOU IDENTIFY'}
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {GENDERS.map((g) => {
-            const selected = gender === g.value
-            return (
-              <motion.button
-                key={g.value}
-                type="button"
-                id={`gender-${g.value}`}
-                className="oracle-input text-center !min-h-0 py-3 px-2 cursor-pointer touch-manipulation"
-                style={{
-                  borderColor: selected ? accent : 'rgba(240,192,64,0.18)',
-                  background: selected ? `${THEME_CONFIG[theme].color}30` : 'rgba(8,0,16,0.5)',
-                  boxShadow: selected ? `0 0 20px ${accent}40` : 'none',
-                  color: selected ? accent : 'var(--text-primary)',
-                  fontFamily: "'Cinzel Decorative', serif",
-                  fontSize: '0.7rem',
-                  letterSpacing: '0.18em',
-                }}
-                whileHover={!selected ? { borderColor: `${accent}80` } : undefined}
-                whileTap={{ scale: 0.96 }}
-                onClick={() => pickGender(g.value)}
-                transition={{ type: 'spring', stiffness: 350, damping: 28 }}
-                aria-pressed={selected}
-              >
-                <div className="text-2xl mb-1" style={{ color: selected ? accent : 'var(--text-muted)' }}>
-                  {g.symbol}
-                </div>
-                <div>{g.label}</div>
-              </motion.button>
-            )
-          })}
+        <div className={`grid gap-3 ${isHoroscope ? 'grid-cols-3 md:grid-cols-4' : 'grid-cols-2 md:grid-cols-4'}`}>
+          {isHoroscope ? (
+            ZODIACS.map((z) => {
+              const selected = zodiacSign === z.value
+              return (
+                <motion.button
+                  key={z.value}
+                  type="button"
+                  className="oracle-input flex flex-col items-center justify-center !min-h-0 py-3 px-1 cursor-pointer touch-manipulation"
+                  style={{
+                    borderColor: selected ? accent : 'rgba(240,192,64,0.18)',
+                    background: selected ? `${THEME_CONFIG[theme].color}30` : 'rgba(8,0,16,0.5)',
+                    boxShadow: selected ? `0 0 20px ${accent}40` : 'none',
+                    color: selected ? accent : 'var(--text-primary)',
+                    fontFamily: "'Cinzel Decorative', serif",
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.1em',
+                  }}
+                  whileHover={!selected ? { borderColor: `${accent}80` } : undefined}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => pickZodiac(z.value)}
+                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                >
+                  <div className="text-2xl mb-1" style={{ color: selected ? accent : 'var(--text-muted)' }}>
+                    {z.symbol}
+                  </div>
+                  <div>{z.label}</div>
+                </motion.button>
+              )
+            })
+          ) : (
+            GENDERS.map((g) => {
+              const selected = gender === g.value
+              return (
+                <motion.button
+                  key={g.value}
+                  type="button"
+                  className="oracle-input text-center !min-h-0 py-3 px-2 cursor-pointer touch-manipulation"
+                  style={{
+                    borderColor: selected ? accent : 'rgba(240,192,64,0.18)',
+                    background: selected ? `${THEME_CONFIG[theme].color}30` : 'rgba(8,0,16,0.5)',
+                    boxShadow: selected ? `0 0 20px ${accent}40` : 'none',
+                    color: selected ? accent : 'var(--text-primary)',
+                    fontFamily: "'Cinzel Decorative', serif",
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.18em',
+                  }}
+                  whileHover={!selected ? { borderColor: `${accent}80` } : undefined}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={() => pickGender(g.value)}
+                  transition={{ type: 'spring', stiffness: 350, damping: 28 }}
+                >
+                  <div className="text-2xl mb-1" style={{ color: selected ? accent : 'var(--text-muted)' }}>
+                    {g.symbol}
+                  </div>
+                  <div>{g.label}</div>
+                </motion.button>
+              )
+            })
+          )}
         </div>
-      </motion.div>
-
-      {/* Age */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.25 }}
-        className="w-full max-w-lg mb-8"
-      >
-        <label
-          htmlFor="age-input"
-          className="block text-[var(--text-muted)] font-oracle text-xs tracking-[0.3em] mb-3 text-center opacity-80"
-        >
-          YOUR AGE
-        </label>
-        <div className="flex justify-center">
-          <div className="relative w-40">
-            <input
-              id="age-input"
-              type="number"
-              inputMode="numeric"
-              min={MIN_AGE}
-              max={MAX_AGE}
-              value={ageText}
-              onChange={(e) => commitAge(e.target.value, false)}
-              onBlur={(e) => commitAge(e.target.value, true)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.currentTarget.blur()  // triggers onBlur → scheduleAdvance
-                }
-              }}
-              placeholder="—"
-              className="oracle-input text-center text-2xl !min-h-0 py-3 px-2 touch-manipulation"
-              style={{
-                fontFamily: "'Cormorant Garamond', serif",
-                color: age != null ? accent : 'var(--text-muted)',
-                MozAppearance: 'textfield',
-              }}
-            />
-            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-[var(--text-muted)] opacity-50 text-xs italic font-body pr-1">
-              years
-            </div>
-          </div>
-        </div>
-        <p className="text-center text-xs italic font-body text-[var(--text-muted)] opacity-60 mt-2">
-          {MIN_AGE}–{MAX_AGE} — used only for tone, never stored
-        </p>
       </motion.div>
 
       {/* Buttons */}
@@ -220,32 +199,6 @@ export default function StepProfile({
         >
           ← Back
         </button>
-        <motion.button
-          whileTap={{ scale: 0.96 }}
-          className="btn-oracle touch-manipulation"
-          onClick={() => {
-            if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
-            onNext()
-          }}
-          id="profile-continue-btn"
-        >
-          Continue the Journey →
-        </motion.button>
-        {nothingFilled && (
-          <motion.button
-            whileTap={{ scale: 0.96 }}
-            className="btn-ghost text-xs touch-manipulation"
-            onClick={() => {
-              if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current)
-              onNext()
-            }}
-            id="profile-skip-btn"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            Skip for now →
-          </motion.button>
-        )}
       </motion.div>
 
       {/* Privacy note */}

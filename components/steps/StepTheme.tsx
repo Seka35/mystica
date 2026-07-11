@@ -16,9 +16,10 @@ const THEME_ICONS: Record<Theme, string> = {
   money: '◈',
   spiritual: '✦',
   free: '∞',
+  horoscope: '✨',
 }
 
-const THEME_ORDER: Theme[] = ['love', 'work', 'money', 'spiritual', 'free']
+const THEME_ORDER: Theme[] = ['love', 'work', 'money', 'spiritual', 'horoscope', 'free']
 
 export default function StepTheme({ selected, onSelect }: Props) {
   return (
@@ -57,7 +58,7 @@ export default function StepTheme({ selected, onSelect }: Props) {
             <motion.button
               key={theme}
               id={`theme-${theme}`}
-              className={`theme-card text-left relative overflow-hidden ${isSelected ? 'selected' : ''}`}
+              className={`theme-card text-left relative overflow-hidden py-2 px-3 md:py-6 md:px-8 ${isSelected ? 'selected' : ''}`}
               onClick={() => onSelect(theme)}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -87,11 +88,11 @@ export default function StepTheme({ selected, onSelect }: Props) {
                 />
               )}
 
-              <div className="pl-4">
-                <div className="text-2xl mb-1" style={{ color: config.accent }}>
+              <div className="pl-3 md:pl-4">
+                <div className="text-xl md:text-2xl mb-1" style={{ color: config.accent }}>
                   {icon}
                 </div>
-                <div className="font-oracle text-xs tracking-wider" style={{ color: config.accent }}>
+                <div className="font-oracle text-[10px] md:text-xs tracking-wider" style={{ color: config.accent }}>
                   {config.label}
                 </div>
                 {isSelected && (

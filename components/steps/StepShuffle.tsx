@@ -352,23 +352,7 @@ export default function StepShuffle({ onNext, onPlayShuffle }: Props) {
         ) : null}
       </motion.div>
 
-      {/* Only "Shuffle Again" left — auto-advance handles the rest */}
-      <motion.div
-        className="flex items-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: done || isShuffling ? 1 : 0.4 }}
-        transition={{ duration: 0.4 }}
-      >
-        <motion.button
-          whileTap={{ scale: 0.94 }}
-          className="btn-ghost text-xs touch-manipulation"
-          onClick={reshuffle}
-          disabled={isShuffling}
-          id="reshuffle-btn"
-        >
-          ↺ &nbsp; Shuffle Again
-        </motion.button>
-      </motion.div>
+      {/* Auto-advance handles the transition after shuffle completes */}
     </motion.div>
   )
 }

@@ -428,18 +428,18 @@ function SlotsArea({ cardCount, positions, picked, countdown, slotRefs, isMobile
   const slotDim  = isMobile ? 86 : 124
 
   if (isMobile) {
-    // Mobile: vertical column in order 3, 1, 2, 4, 5
-    const order = [2, 0, 1, 3, 4]
     return (
-      <div className="flex justify-center mb-4 overflow-x-auto">
-        <div className="flex flex-col gap-3">
-          {order.map((idx) => (
-            <Slot key={idx} index={idx} slotPos={positions[idx]}
-                  card={picked[idx]} color={PALETTE[idx]}
-                  countdown={countdown}
-                  registerRef={(el) => { slotRefs.current[idx] = el }}
-                  size={slotSize} dim={slotDim} />
-          ))}
+      <div className="flex flex-col items-center gap-2 mb-2 w-full max-w-sm mx-auto">
+        <div className="flex justify-center gap-4">
+          <Slot index={0} slotPos={positions[0]} card={picked[0]} color={PALETTE[0]} countdown={countdown} registerRef={(el) => { slotRefs.current[0] = el }} size={slotSize} dim={slotDim} />
+          <Slot index={1} slotPos={positions[1]} card={picked[1]} color={PALETTE[1]} countdown={countdown} registerRef={(el) => { slotRefs.current[1] = el }} size={slotSize} dim={slotDim} />
+        </div>
+        <div className="flex justify-center">
+          <Slot index={2} slotPos={positions[2]} card={picked[2]} color={PALETTE[2]} countdown={countdown} registerRef={(el) => { slotRefs.current[2] = el }} size={slotSize} dim={slotDim} />
+        </div>
+        <div className="flex justify-center gap-4">
+          <Slot index={3} slotPos={positions[3]} card={picked[3]} color={PALETTE[3]} countdown={countdown} registerRef={(el) => { slotRefs.current[3] = el }} size={slotSize} dim={slotDim} />
+          <Slot index={4} slotPos={positions[4]} card={picked[4]} color={PALETTE[4]} countdown={countdown} registerRef={(el) => { slotRefs.current[4] = el }} size={slotSize} dim={slotDim} />
         </div>
       </div>
     )

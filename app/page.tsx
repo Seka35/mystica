@@ -28,6 +28,7 @@ export default function Page() {
   const [spreadId, setSpreadId] = useState<SpreadId>(DEFAULT_SPREAD_ID)
   const [question, setQuestion] = useState('')
   const [gender, setGender] = useState<Gender | null>(null)
+  const [zodiacSign, setZodiacSign] = useState<string | null>(null)
   const [age, setAge] = useState<number | null>(null)
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([])
   const [interpretation, setInterpretation] = useState('')
@@ -39,9 +40,9 @@ export default function Page() {
   // ── Audio ────────────────────────────────────────────────────────
   const audio = useAudio()
 
-  // Lock scroll per-step; allow scroll only inside interpretation step (9)
+  // Lock scroll per-step; allow scroll inside fan (7), draw (8) and interpretation (9)
   useEffect(() => {
-    document.body.style.overflow = step === 9 ? 'auto' : 'hidden'
+    document.body.style.overflow = (step >= 7) ? 'auto' : 'hidden'
     return () => { document.body.style.overflow = '' }
   }, [step])
 
@@ -55,6 +56,7 @@ export default function Page() {
     setDrawnCards([])
     setQuestion('')
     setGender(null)
+    setZodiacSign(null)
     setAge(null)
     setTheme(null)
     setSpreadId(DEFAULT_SPREAD_ID)
@@ -69,10 +71,15 @@ export default function Page() {
     spreadId: SpreadId
     gender: Gender | null
     age: number | null
+    zodiacSign: string | null
   }) => {
     if (!payload.theme) return
+    const finalQuestion = payload.theme === 'horoscope' 
+      ? `Daily Horoscope for ${payload.zodiacSign || 'Unknown sign'}`
+      : payload.question
+
     const body = {
-      question: payload.question,
+      question: finalQuestion,
       theme: payload.theme,
       spreadId: payload.spreadId,
       gender: payload.gender,
@@ -174,7 +181,12 @@ export default function Page() {
 
   const handleThemeSelect = (t: Theme) => {
     setTheme(t)
-    scheduleAdvance(3, () => audio.play('chime'))
+    if (t === 'horoscope') {
+      setSpreadId('daily')
+      scheduleAdvance(5, () => audio.play('chime'))
+    } else {
+      scheduleAdvance(3, () => audio.play('chime'))
+    }
   }
 
   const handleSpreadSelect = (id: SpreadId) => {
@@ -214,6 +226,7 @@ export default function Page() {
         spreadId,
         gender,
         age,
+        zodiacSign,
       })
     }
   }
@@ -278,11 +291,11 @@ export default function Page() {
             key="s5"
             theme={theme}
             gender={gender}
-            age={age}
+            zodiacSign={zodiacSign}
             onChangeGender={setGender}
-            onChangeAge={setAge}
+            onChangeZodiac={setZodiacSign}
             onNext={handleProfileNext}
-            onBack={handleProfileBack}
+            onBack={theme === 'horoscope' ? () => { audio.play('chime'); setStep(2) } : handleProfileBack}
           />
         )}
 
