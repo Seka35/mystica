@@ -51,28 +51,31 @@ export default function StepTheme({ selected, onSelect }: Props) {
         </p>
       </motion.div>
 
-      {/* Theme list */}
-      <div className="flex flex-col gap-3 md:gap-6 w-full max-w-lg mb-10">
+      {/* Theme grid */}
+      <div className="grid grid-cols-3 gap-2 md:gap-3 w-full max-w-3xl mb-10">
         {THEME_ORDER.map((theme, i) => {
           const config = THEME_CONFIG[theme]
           const isSelected = selected === theme
           const icon = THEME_ICONS[theme]
           const desc = config.placeholder.split('?')[0] + '?'
+          const isFree = theme === 'free'
 
           return (
             <motion.button
               key={theme}
               id={`theme-${theme}`}
               onClick={() => onSelect(theme)}
-              className={`relative overflow-hidden rounded-xl border transition-all duration-500 w-full h-28 md:h-36 ${
+              className={`relative overflow-hidden rounded-xl border transition-all duration-500 w-full ${
+                isFree ? 'col-span-3 aspect-[21/9] md:h-36' : 'aspect-square'
+              } ${
                 isSelected 
                   ? 'border-[rgba(212,175,55,0.8)] shadow-[0_0_30px_rgba(212,175,55,0.2)]' 
                   : 'border-[rgba(212,175,55,0.2)] hover:border-[rgba(212,175,55,0.5)] opacity-80 hover:opacity-100'
               }`}
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 + i * 0.1, duration: 0.6 }}
-              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 + i * 0.05, duration: 0.5 }}
+              whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
               {/* Background Image */}
@@ -94,13 +97,15 @@ export default function StepTheme({ selected, onSelect }: Props) {
               />
 
               {/* Content */}
-              <div className="absolute bottom-0 left-0 w-full p-3 md:p-5 text-left">
-                <div className="font-oracle text-xl md:text-2xl gold-text mb-1 md:mb-2 tracking-wide drop-shadow-lg" style={{ color: isSelected ? config.accent : undefined }}>
+              <div className={`absolute bottom-0 left-0 w-full text-left ${isFree ? 'p-3 md:p-5' : 'p-2 md:p-3'}`}>
+                <div className={`font-oracle gold-text tracking-wide drop-shadow-lg ${isFree ? 'text-xl md:text-2xl mb-1' : 'text-sm md:text-lg mb-0.5'}`} style={{ color: isSelected ? config.accent : undefined }}>
                   {config.label}
                 </div>
-                <div className="text-[var(--text-muted)] italic text-xs md:text-sm font-body max-w-[90%] drop-shadow-md">
-                  {desc}
-                </div>
+                {isFree && (
+                  <div className="text-[var(--text-muted)] italic text-xs md:text-sm font-body max-w-[90%] drop-shadow-md">
+                    {desc}
+                  </div>
+                )}
               </div>
             </motion.button>
           )
