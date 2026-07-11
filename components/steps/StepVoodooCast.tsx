@@ -5,13 +5,14 @@ import { useState, useRef, useEffect } from 'react'
 import type { CowrieCast } from '@/lib/types'
 
 interface Props {
-  onNext: (cast: CowrieCast[]) => void
+  onCastGenerated: (cast: CowrieCast[]) => void
+  onNext: () => void
   audio: { play: (name: any) => void; stop: (name: any) => void }
 }
 
 const COWRIES_COUNT = 4
 
-export default function StepVoodooCast({ onNext, audio }: Props) {
+export default function StepVoodooCast({ onCastGenerated, onNext, audio }: Props) {
   const [hasCast, setHasCast] = useState(false)
   const [isShaking, setIsShaking] = useState(false)
   const [castResult, setCastResult] = useState<CowrieCast[]>([])
@@ -21,6 +22,23 @@ export default function StepVoodooCast({ onNext, audio }: Props) {
     if (hasCast || isShaking) return
     setIsShaking(true)
     audio.play('cowries_shake')
+    // Generate random casts immediately so we can start fetching interpretation
+    const result: CowrieCast[] = Array.from({ length: COWRIES_COUNT }).map(() => 
+      Math.random() > 0.5 ? 'open' : 'closed'
+    )
+    
+    // Generate random drop positions
+    const pos = Array.from({ length: COWRIES_COUNT }).map(() => ({
+      x: (Math.random() - 0.5) * 150,
+      y: (Math.random() - 0.5) * 150,
+      rot: Math.random() * 360,
+    }))
+    
+    setCastResult(result)
+    setPositions(pos)
+    
+    // Trigger API call immediately in background
+    onCastGenerated(result)
 
     // Simulate shaking time before throwing
     setTimeout(() => {
@@ -28,23 +46,9 @@ export default function StepVoodooCast({ onNext, audio }: Props) {
       setHasCast(true)
       audio.play('cowries_throw')
 
-      // Generate random casts
-      const result: CowrieCast[] = Array.from({ length: COWRIES_COUNT }).map(() => 
-        Math.random() > 0.5 ? 'open' : 'closed'
-      )
-      setCastResult(result)
-
-      // Generate random drop positions
-      const pos = Array.from({ length: COWRIES_COUNT }).map(() => ({
-        x: (Math.random() - 0.5) * 150, // random spread around center X
-        y: (Math.random() - 0.5) * 150, // random spread around center Y
-        rot: Math.random() * 360, // random rotation
-      }))
-      setPositions(pos)
-
       // Auto advance after animation
       setTimeout(() => {
-        onNext(result)
+        onNext()
       }, 3500)
     }, 1200) // Duration of shake
   }

@@ -295,18 +295,21 @@ export default function Page() {
   const handleNewReading = () => { audio.play('chime'); resetReading() }
 
   // Voodoo flow handlers
-  const handleVoodooCast = (cast: CowrieCast[]) => {
+  const handleVoodooCastGenerated = (cast: CowrieCast[]) => {
     setCowries(cast)
-    setStep(14)
     if (theme) {
       void startStreamingInterpretation({
         question,
         theme,
         loa,
         offering,
-        cowries: cast
+        cowries: cast,
       })
     }
+  }
+  
+  const handleVoodooCastComplete = () => {
+    setStep(14)
   }
 
   // ── Render ───────────────────────────────────────────────────────
@@ -441,7 +444,8 @@ export default function Page() {
         {step === 13 && (
           <StepVoodooCast 
             key="s13"
-            onNext={handleVoodooCast}
+            onCastGenerated={handleVoodooCastGenerated}
+            onNext={handleVoodooCastComplete}
             audio={audio}
           />
         )}
